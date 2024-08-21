@@ -1,0 +1,16 @@
+python -m venv venv
+venv\Scripts\activate.bat
+pip install -r requirements.txt
+pip freeze > requirements.txt
+
+
+Flask
+Flask-SQLAlchemy
+pymysql
+pyodbc
+
+https://flask-migrate.readthedocs.io/en/latest/
+
+flask db init
+flask db migrate -m "Initial migration."
+flask db upgrade
