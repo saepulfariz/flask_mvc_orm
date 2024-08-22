@@ -8,14 +8,18 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost:3306/fl
 # https://medium.com/@alfatihridhont/flask-chapter-4-database-orm-786f16fd3b59
 
 
-db = SQLAlchemy(app)
+# db = SQLAlchemy(app)
+
+from models.Index import db
+
+db.init_app(app)
 migrate = Migrate(app, db)
 
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(128))
+# class User(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     name = db.Column(db.String(128))
     
-class Product(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(128))
-    price = db.Column(db.Float(13))
+# class Product(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     name = db.Column(db.String(128))
+#     price = db.Column(db.Float(13))
