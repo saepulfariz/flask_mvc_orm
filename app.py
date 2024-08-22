@@ -11,6 +11,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost:3306/fl
 # db = SQLAlchemy(app)
 
 from models.Index import db
+# from models import db
 
 db.init_app(app)
 migrate = Migrate(app, db)
