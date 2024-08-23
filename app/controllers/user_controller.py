@@ -18,3 +18,16 @@ def create():
         db.session.commit()
         flash('User created successfully!')
         return redirect(url_for('user.index'))
+    
+def edit(id):
+    data = User.query.get_or_404(id)
+    return render_template('users/edit.html', data=data)
+
+def update(id):
+    user = User.query.get_or_404(id)
+    if request.method == 'POST':
+        user.username = request.form['username']
+        user.email = request.form['email']
+        db.session.commit()
+        flash('User updated successfully!')
+        return redirect(url_for('user.index'))

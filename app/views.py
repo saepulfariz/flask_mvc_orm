@@ -20,3 +20,11 @@ def new():
 @user.route('/users', methods=['POST'])
 def create():
     return user_controller.create()
+
+@user.route('/users/<int:id>/edit', methods=['GET'])
+def edit(id):
+    return user_controller.edit(id)
+
+@user.route('/users/<int:id>', methods=['POST'])
+def update(id):
+    return user_controller.update(id)
