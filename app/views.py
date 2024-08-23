@@ -1,8 +1,8 @@
 from flask import Blueprint
-from .controllers import get_users
+from app.controllers import home_controller
 
 main = Blueprint('main', __name__)
 
 @main.route('/')
 def index():
-    return get_users()
+    return home_controller.index()
