@@ -9,7 +9,7 @@
 
 <body>
     <h1>Users</h1>
-    <a href="">Create User</a>
+    <a href="{{ url_for('user.new') }}">Create User</a>
     <ul>
         {% for d in data %}
         <li>{{ d.username }} - {{ d.email }}

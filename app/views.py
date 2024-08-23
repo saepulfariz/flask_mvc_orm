@@ -9,6 +9,14 @@ def index():
     return home_controller.index()
 
 # User routes
-@user.route('/users')
-def get_users():
+@user.route('/users', methods=['GET'])
+def index():
     return user_controller.index()
+
+@user.route('/users/new', methods=['GET'])
+def new():
+    return user_controller.new()
+
+@user.route('/users', methods=['POST'])
+def create():
+    return user_controller.create()
