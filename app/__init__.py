@@ -14,6 +14,7 @@ def create_app(config_class):
         # from app.views import main
 
         app.register_blueprint(views.main, url_prefix='/')
+        app.register_blueprint(views.user, url_prefix='/')
 
         db.create_all()
     

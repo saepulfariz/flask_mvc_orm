@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users</title>
+</head>
+
+<body>
+    <h1>Users</h1>
+    <a href="">Create User</a>
+    <ul>
+        {% for d in data %}
+        <li>{{ d.username }} - {{ d.email }}
+            <a href="">Edit</a>
+            <form action="" method="post" style="display:inline;">
+                <button type="submit">Delete</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+
+</html>
