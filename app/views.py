@@ -38,3 +38,11 @@ def delete(id):
 @product.route('/products', methods=['GET'])
 def index():
     return product_controller.index()
+
+@product.route('/products/new', methods=['GET'])
+def new():
+    return product_controller.new()
+
+@product.route('/products', methods=['POST'])
+def create():
+    return product_controller.create()
