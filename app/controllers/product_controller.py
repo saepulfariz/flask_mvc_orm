@@ -33,3 +33,10 @@ def update(id):
         db.session.commit()
         flash('Product updated successfully!')
         return redirect(url_for('product.index'))
+    
+def delete(id):
+    product = Product.query.get_or_404(id)
+    db.session.delete(product)
+    db.session.commit()
+    flash('Product deleted successfully!')
+    return redirect(url_for('product.index'))
