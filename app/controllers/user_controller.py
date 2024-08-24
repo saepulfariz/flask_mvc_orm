@@ -31,3 +31,10 @@ def update(id):
         db.session.commit()
         flash('User updated successfully!')
         return redirect(url_for('user.index'))
+    
+def delete(id):
+    user = User.query.get_or_404(id)
+    db.session.delete(user)
+    db.session.commit()
+    flash('User deleted successfully!')
+    return redirect(url_for('user.index'))
