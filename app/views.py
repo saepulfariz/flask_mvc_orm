@@ -54,3 +54,7 @@ def edit(id):
 @product.route('/products/<int:id>', methods=['POST'])
 def update(id):
     return product_controller.update(id)
+
+@product.route('/products/<int:id>/delete', methods=['POST'])
+def delete(id):
+    return product_controller.delete(id)
