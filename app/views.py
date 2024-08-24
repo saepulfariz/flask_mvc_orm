@@ -46,3 +46,11 @@ def new():
 @product.route('/products', methods=['POST'])
 def create():
     return product_controller.create()
+
+@product.route('/products/<int:id>/edit', methods=['GET'])
+def edit(id):
+    return product_controller.edit(id)
+
+@product.route('/products/<int:id>', methods=['POST'])
+def update(id):
+    return product_controller.update(id)
