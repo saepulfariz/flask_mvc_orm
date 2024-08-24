@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+</head>
+
+<body>
+    <h1>Products</h1>
+    <a href="">Create Product</a>
+    <ul>
+        {% for d in data %}
+        <li>{{ d.name }} - ${{ d.price }} (Stock: {{ d.stock }})
+            <a href="">Edit</a>
+            <form action="" method="post" style="display:inline;">
+                <button type="submit">Delete</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+
+</html>

@@ -1,8 +1,9 @@
 from flask import Blueprint
-from app.controllers import home_controller,user_controller
+from app.controllers import product_controller,home_controller,user_controller
 
 main = Blueprint('main', __name__)
 user = Blueprint('user', __name__)
+product = Blueprint('product', __name__)
 
 @main.route('/')
 def index():
@@ -32,3 +33,8 @@ def update(id):
 @user.route('/users/<int:id>/delete', methods=['POST'])
 def delete(id):
     return user_controller.delete(id)
+
+
+@product.route('/products', methods=['GET'])
+def index():
+    return product_controller.index()
