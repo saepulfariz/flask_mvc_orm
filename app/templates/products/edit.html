@@ -22,7 +22,11 @@
         <label for="users">Users:</label>
         <select name="user_id" id="user_id">
             {% for d in data.users %}
+            {% if d.id == data.data.user_id %}
+            <option selected value="{{ d.id }}">{{ d.username }}</option>
+            {% else %}
             <option value="{{ d.id }}">{{ d.username }}</option>
+            {% endif %}
             {% endfor %}
         </select>
         <br>
