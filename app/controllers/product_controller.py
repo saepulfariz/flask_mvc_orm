@@ -17,7 +17,8 @@ def create():
         name = request.form['name']
         price = request.form['price']
         stock = request.form['stock']
-        product = Product(name=name, price=price, stock=stock)
+        user_id = request.form['user_id']
+        product = Product(name=name, price=price, stock=stock,user_id=user_id )
         db.session.add(product)
         db.session.commit()
         flash('Product created successfully!')
