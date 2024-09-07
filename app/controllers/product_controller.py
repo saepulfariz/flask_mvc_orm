@@ -38,6 +38,7 @@ def update(id):
         product.name = request.form['name']
         product.price = request.form['price']
         product.stock = request.form['stock']
+        product.user_id = request.form['user_id']
         db.session.commit()
         flash('Product updated successfully!')
         return redirect(url_for('product.index'))
