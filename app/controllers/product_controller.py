@@ -1,5 +1,5 @@
 from flask import request, redirect, url_for, render_template, flash
-from app.models import Product
+from app.models import Product, User
 from app import db
 
 def index():
@@ -7,7 +7,10 @@ def index():
     return render_template('products/index.html', data=data)
 
 def new():
-    return render_template('products/new.html')
+    data = {
+        'users' : User.query.all()
+    }
+    return render_template('products/new.html', data=data)
 
 def create():
     if request.method == 'POST':

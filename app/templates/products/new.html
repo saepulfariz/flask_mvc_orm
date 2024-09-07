@@ -19,6 +19,13 @@
         <label for="stock">Stock:</label>
         <input type="text" name="stock" id="stock">
         <br>
+        <label for="users">Users:</label>
+        <select name="user_id" id="user_id">
+            {% for d in data.users %}
+            <option value="{{ d.id }}">{{ d.username }}</option>
+            {% endfor %}
+        </select>
+        <br>
         <button type="submit">Create</button>
     </form>
 </body>
