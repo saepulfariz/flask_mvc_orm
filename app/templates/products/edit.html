@@ -9,15 +9,22 @@
 
 <body>
     <h1>Update Product</h1>
-    <form action="{{ url_for('product.update', id=data.id) }}" method="post">
+    <form action="{{ url_for('product.update', id=data.data.id) }}" method="post">
         <label for="name">Name:</label>
-        <input type="text" name="name" id="name" value="{{ data.name }}">
+        <input type="text" name="name" id="name" value="{{ data.data.name }}">
         <br>
         <label for="price">Price:</label>
-        <input type="text" name="price" id="price" value="{{ data.price }}">
+        <input type="text" name="price" id="price" value="{{ data.data.price }}">
         <br>
         <label for="stock">Stock:</label>
-        <input type="text" name="stock" id="stock" value="{{ data.stock }}">
+        <input type="text" name="stock" id="stock" value="{{ data.data.stock }}">
+        <br>
+        <label for="users">Users:</label>
+        <select name="user_id" id="user_id">
+            {% for d in data.users %}
+            <option value="{{ d.id }}">{{ d.username }}</option>
+            {% endfor %}
+        </select>
         <br>
         <button type="submit">Update</button>
     </form>

@@ -25,7 +25,11 @@ def create():
         return redirect(url_for('product.index'))
     
 def edit(id):
-    data = Product.query.get_or_404(id)
+    result = Product.query.get_or_404(id)
+    data = {
+        'users' : User.query.all(),
+        'data' : result
+    }
     return render_template('products/edit.html', data=data)
 
 def update(id):
