@@ -17,7 +17,7 @@ def create():
         user = User(username=username, email=email)
         db.session.add(user)
         db.session.commit()
-        flash('User created successfully!')
+        flash('User created successfully!', 'message')
         return redirect(url_for('user.index'))
     
 def edit(id):
@@ -30,12 +30,12 @@ def update(id):
         user.username = request.form['username']
         user.email = request.form['email']
         db.session.commit()
-        flash('User updated successfully!')
+        flash('User updated successfully!', 'message')
         return redirect(url_for('user.index'))
     
 def delete(id):
     user = User.query.get_or_404(id)
     db.session.delete(user)
     db.session.commit()
-    flash('User deleted successfully!')
+    flash('User deleted successfully!', 'message')
     return redirect(url_for('user.index'))

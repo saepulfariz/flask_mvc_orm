@@ -20,6 +20,20 @@
         </li>
         {% endfor %}
     </ul>
+
+
+    {% with messages = get_flashed_messages(category_filter=["message"]) %}
+    {% if messages %}
+    {%- for msg in messages %}
+    <script>
+        alert('{{ msg }}')
+    </script>
+    {% endfor -%}
+
+    {% endif %}
+    {% endwith %}
+
+
 </body>
 
 </html>

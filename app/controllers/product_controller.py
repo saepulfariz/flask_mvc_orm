@@ -42,7 +42,7 @@ def create():
         product = Product(name=name, price=price, stock=stock,user_id=user_id )
         db.session.add(product)
         db.session.commit()
-        flash('Product created successfully!')
+        flash('Product created successfully!', 'message')
         return redirect(url_for('product.index'))
     
 def edit(id):
@@ -61,12 +61,12 @@ def update(id):
         product.stock = request.form['stock']
         product.user_id = request.form['user_id']
         db.session.commit()
-        flash('Product updated successfully!')
+        flash('Product updated successfully!', 'message')
         return redirect(url_for('product.index'))
     
 def delete(id):
     product = Product.query.get_or_404(id)
     db.session.delete(product)
     db.session.commit()
-    flash('Product deleted successfully!')
+    flash('Product deleted successfully!', 'message')
     return redirect(url_for('product.index'))
