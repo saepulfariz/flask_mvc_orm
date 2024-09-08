@@ -1,5 +1,6 @@
 from app import db
 from .base_model import BaseModel
+from sqlalchemy import text 
 
 class Product(BaseModel):
     __tablename__ = 'products'
@@ -13,3 +14,16 @@ class Product(BaseModel):
 
     def __repr__(self):
         return f'<Product {self.name}>'
+    
+    @staticmethod
+    def get_products_with_owners():
+        sql_query = """
+        SELECT products.id, products.name, products.price, products.stock, users.username 
+        FROM products 
+        JOIN users ON products.user_id = users.id
+        """
+
+        sql_query = text(sql_query)
+        
+        result = db.session.execute(sql_query)
+        return result.fetchall()

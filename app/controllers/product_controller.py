@@ -20,6 +20,9 @@ def index():
     # Fetch all rows from the result
     data = result.fetchall()
 
+    # query native in model
+    data = Product.get_products_with_owners()
+
     return render_template('products/index.html', data=data)
 
 def new():
