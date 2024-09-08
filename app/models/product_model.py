@@ -10,7 +10,13 @@ class Product(BaseModel):
     stock = db.Column(db.Integer, nullable=False)
     
     # Foreign key to associate product with user
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    # default onupdate and ondelete RESTRICT
+    # user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+
+    # ForeignKey dengan onupdate CASCADE dan ondelete SET NULL
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id', onupdate='CASCADE', ondelete='SET NULL'), nullable=True)
+    
+    user = db.relationship('Users', backref=db.backref('products', lazy=True))
 
     def __repr__(self):
         return f'<Product {self.name}>'
