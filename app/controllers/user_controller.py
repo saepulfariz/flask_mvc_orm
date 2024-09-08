@@ -4,6 +4,7 @@ from app import db
 
 def index():
     data = User.query.all()
+    print(data)
     return render_template('users/index.html', data=data)
 
 def new():

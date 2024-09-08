@@ -8,7 +8,8 @@ class User(BaseModel):
     email = db.Column(db.String(120), unique=True, nullable=False)
     
     # Relationship: One user can have many products
-    products = db.relationship('Product', backref='owner', lazy=True)
+    # products = db.relationship('Product', backref='owner', lazy=True)
+    products = db.relationship('Product', backref='User', lazy=True)
 
     def __repr__(self):
         return f'<User {self.username}>'

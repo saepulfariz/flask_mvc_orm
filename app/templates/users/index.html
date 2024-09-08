@@ -12,7 +12,7 @@
     <a href="{{ url_for('user.new') }}">Create User</a>
     <ul>
         {% for d in data %}
-        <li>{{ d.username }} - {{ d.email }}
+        <li>{{ d.username }} - {{ d.email }} - {{ d.products }}
             <a href="{{ url_for('user.edit', id=d.id) }}">Edit</a>
             <form action="{{ url_for('user.delete', id=d.id) }}" method="post" style="display:inline;">
                 <button type="submit">Delete</button>

@@ -23,6 +23,8 @@ def index():
     # query native in model
     data = Product.get_products_with_owners()
 
+    data = Product.query.all()
+
     return render_template('products/index.html', data=data)
 
 def new():

@@ -16,7 +16,8 @@ class Product(BaseModel):
     # ForeignKey dengan onupdate CASCADE dan ondelete SET NULL
     user_id = db.Column(db.Integer, db.ForeignKey('users.id', onupdate='CASCADE', ondelete='SET NULL'), nullable=True)
     
-    user = db.relationship('Users', backref=db.backref('products', lazy=True))
+    # name model User and Product
+    user = db.relationship('User', backref=db.backref('product', lazy=True))
 
     def __repr__(self):
         return f'<Product {self.name}>'
