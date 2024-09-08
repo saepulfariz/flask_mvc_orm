@@ -1,14 +1,24 @@
 from flask import request, redirect, url_for, render_template, flash
 from app.models import Product, User
 from app import db
-
+from sqlalchemy import text 
 
 def index():
     # data = Product.query.all()
    
     # data = db.session.query(User.username, Product).join(Product).all()
     # data = db.session.query(User, Product).join(Product).filter(User.id == user_id).all()
-    data = db.session.query(Product.id, Product.name,Product.price, Product.stock,User.username).join(User).all()
+    # data = db.session.query(Product.id, Product.name,Product.price, Product.stock,User.username).join(User).all()
+
+    # sql_query = """SELECT * FROM products"""
+    sql_query = """ SELECT products.id, products.name, products.price, products.stock, users.username FROM products JOIN users ON products.user_id = users.id """
+    sql_query = text(sql_query)
+    
+    # Execute the raw SQL query
+    result = db.session.execute(sql_query)
+    
+    # Fetch all rows from the result
+    data = result.fetchall()
 
     return render_template('products/index.html', data=data)
 
