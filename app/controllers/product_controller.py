@@ -2,8 +2,14 @@ from flask import request, redirect, url_for, render_template, flash
 from app.models import Product, User
 from app import db
 
+
 def index():
-    data = Product.query.all()
+    # data = Product.query.all()
+   
+    # data = db.session.query(User.username, Product).join(Product).all()
+    # data = db.session.query(User, Product).join(Product).filter(User.id == user_id).all()
+    data = db.session.query(Product.id, Product.name,Product.price, Product.stock,User.username).join(User).all()
+
     return render_template('products/index.html', data=data)
 
 def new():
