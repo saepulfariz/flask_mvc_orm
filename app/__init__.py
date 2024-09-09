@@ -9,13 +9,16 @@ def create_app(config_class):
     db.init_app(app)
     
     with app.app_context():
-        from . import models, views
+        from . import models, routes
 
         # from app.views import main
 
-        app.register_blueprint(views.main, url_prefix='/')
-        app.register_blueprint(views.user, url_prefix='/')
-        app.register_blueprint(views.product, url_prefix='/')
+        app.register_blueprint(routes.main, url_prefix='/')
+        app.register_blueprint(routes.user, url_prefix='/')
+        app.register_blueprint(routes.product, url_prefix='/')
+        # app.register_blueprint(views.main, url_prefix='/')
+        # app.register_blueprint(views.user, url_prefix='/')
+        # app.register_blueprint(views.product, url_prefix='/')
 
         db.create_all()
     
