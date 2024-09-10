@@ -1,3 +1,3 @@
 from .main import main
-from .user import user
+from .users import users
 from .products import products
