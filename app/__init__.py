@@ -2,11 +2,16 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
+db_sqlserver = SQLAlchemy()
 
 def create_app(config_class):
     app = Flask(__name__)
     app.config.from_object(config_class)
+    
     db.init_app(app)
+
+    # Inisialisasi SQL Server dengan bind
+    # db_sqlserver.init_app(app)
     
     with app.app_context():
         from . import models, routes
