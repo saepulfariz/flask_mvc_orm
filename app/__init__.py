@@ -15,7 +15,7 @@ def create_app(config_class):
 
         app.register_blueprint(routes.main, url_prefix='/')
         app.register_blueprint(routes.user, url_prefix='/')
-        app.register_blueprint(routes.product, url_prefix='/')
+        app.register_blueprint(routes.products, url_prefix='/')
         # app.register_blueprint(views.main, url_prefix='/')
         # app.register_blueprint(views.user, url_prefix='/')
         # app.register_blueprint(views.product, url_prefix='/')
