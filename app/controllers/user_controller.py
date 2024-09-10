@@ -5,7 +5,9 @@ from app import db
 def index():
     data = User.query.all()
     print(Student.query.all())
-    return render_template('users/index.html', data=data)
+    print(Student.get_student())
+    students = Student.get_student()
+    return render_template('users/index.html', data=data, students = students)
 
 def new():
     return render_template('users/new.html')

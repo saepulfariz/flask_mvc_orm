@@ -21,6 +21,14 @@
         {% endfor %}
     </ul>
 
+    <h1>Data Student</h1>
+    <ul>
+        {% for d in students %}
+        <li>{{ d.name }}
+        </li>
+        {% endfor %}
+    </ul>
+
     {% with messages = get_flashed_messages(category_filter=["message"]) %}
     {% if messages %}
     <script>
