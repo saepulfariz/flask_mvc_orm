@@ -6,7 +6,7 @@ def index():
     data = User.query.all()
     print(Student.query.all())
     print(Student.get_student())
-    print(PcsModel.getProductionData())
+    print(PcsModel.getProductionData('V01'))
     students = Student.get_student()
     return render_template('users/index.html', data=data, students = students)
 

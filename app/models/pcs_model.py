@@ -9,8 +9,8 @@ class PcsModel(BaseModel):
     __tablename__ = 'DC_PRODUCTION_DATA'
 
     @staticmethod
-    def getProductionData():
-        sql_query = """ SELECT TOP 10 * FROM DC_PRODUCTION_DATA
+    def getProductionData(pp_code ='B02'):
+        sql_query = """ SELECT TOP 10 * FROM DC_PRODUCTION_DATA WHERE PP_CODE = '"""+pp_code+"""'
         """
 
         sql_query = text(sql_query)
