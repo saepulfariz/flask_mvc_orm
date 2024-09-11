@@ -1,11 +1,12 @@
 from flask import request, redirect, url_for, render_template, flash
-from app.models import User, Student
+from app.models import User, Student, PcsModel
 from app import db
 
 def index():
     data = User.query.all()
     print(Student.query.all())
     print(Student.get_student())
+    print(PcsModel.getProductionData())
     students = Student.get_student()
     return render_template('users/index.html', data=data, students = students)
 
