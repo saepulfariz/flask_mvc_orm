@@ -3,12 +3,17 @@ from app.models import User, Student, PcsModel
 from app import db
 
 from flask_wtf import FlaskForm
-from wtforms import StringField
-from wtforms.validators import DataRequired
+from wtforms import StringField, SubmitField
+from wtforms.validators import DataRequired, Length
 
 class UserForm(FlaskForm):
-    username = StringField('username', validators=[DataRequired()])
-    email = StringField('email', validators=[DataRequired()])
+    username = StringField('Username', 
+                           validators=[DataRequired(), Length(min=3, max=50)], 
+                           render_kw={"class": "form-control", "placeholder": "Enter your username"})
+    email = StringField('Email', 
+                        validators=[DataRequired()], 
+                        render_kw={"class": "form-control", "placeholder": "Enter your email"})
+    submit = SubmitField('Submit', render_kw={"class": "btn btn-primary"})
 
 def index():
     form = FlaskForm()
