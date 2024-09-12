@@ -3,17 +3,29 @@ from app.models import User, Student, PcsModel
 from app import db
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
-from wtforms.validators import DataRequired, Length
+from wtforms import StringField, SubmitField, ValidationError
+from wtforms.validators import DataRequired, Length, Email
 
 class UserForm(FlaskForm):
     username = StringField('Username', 
                            validators=[DataRequired(), Length(min=3, max=50)], 
                            render_kw={"class": "form-control", "placeholder": "Enter your username"})
     email = StringField('Email', 
-                        validators=[DataRequired()], 
+                        validators=[DataRequired(), Email()], 
                         render_kw={"class": "form-control", "placeholder": "Enter your email"})
     submit = SubmitField('Submit', render_kw={"class": "btn btn-primary"})
+
+    # Custom validator untuk memastikan username unik
+    def validate_username(self, username):
+        user = User.query.filter_by(username=username.data).first()
+        if user:
+            raise ValidationError('Username sudah digunakan. Silakan pilih username lain.')
+
+    # Custom validator untuk memastikan email unik
+    def validate_email(self, email):
+        user = User.query.filter_by(email=email.data).first()
+        if user:
+            raise ValidationError('Email sudah digunakan. Silakan pilih email lain.')
 
 def index():
     form = FlaskForm()
