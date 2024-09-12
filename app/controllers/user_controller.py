@@ -37,17 +37,23 @@ def create():
             return render_template('users/new.html', form=form)
     
 def edit(id):
+    form = UserForm()
     data = User.query.get_or_404(id)
-    return render_template('users/edit.html', data=data)
+    return render_template('users/edit.html', data=data, form=form)
 
 def update(id):
+    form = UserForm()
     user = User.query.get_or_404(id)
     if request.method == 'POST':
-        user.username = request.form['username']
-        user.email = request.form['email']
-        db.session.commit()
-        flash('User updated successfully!', 'message')
-        return redirect(url_for('users.index'))
+        if form.validate_on_submit():
+            user.username = request.form['username']
+            user.email = request.form['email']
+            db.session.commit()
+            flash('User updated successfully!', 'message')
+            return redirect(url_for('users.index'))
+        else:
+            data = User.query.get_or_404(id)
+            return render_template('users/edit.html', data=data, form=form)
     
 def delete(id):
     user = User.query.get_or_404(id)
