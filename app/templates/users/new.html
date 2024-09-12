@@ -10,11 +10,18 @@
 <body>
     <h1>New User</h1>
     <form action="{{ url_for('users.create') }}" method="post">
-        <label for="username">Username:</label>
-        <input type="text" name="username" id="username">
+        {{ form.csrf_token }}
+        {{ form.username.label }} {{ form.username(size=20) }}
+        {% if form.username.errors %}
+        <span style="color: red;">{{ form.username.errors[0] }}</span>
+        {% endif %}
+
         <br>
         <label for="email">Email:</label>
         <input type="email" name="email" id="email">
+        {% if form.email.errors %}
+        <span style="color: red;">{{ form.email.errors[0] }}</span>
+        {% endif %}
         <br>
         <button type="submit">Create</button>
         <a href="{{ url_for('users.index') }}">Back</a>

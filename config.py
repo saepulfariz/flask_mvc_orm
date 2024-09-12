@@ -1,7 +1,12 @@
+import os
+
 class Config:
     # Konfigurasi untuk MySQL
     SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:@localhost/flask_mvc_orm'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+    # SECRET_KEY = os.urandom(32)
+    SECRET_KEY = 'APP_FLASK'
 
     # Konfigurasi untuk SQL Server
     SQLALCHEMY_BINDS = {
