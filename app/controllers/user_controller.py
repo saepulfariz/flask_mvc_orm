@@ -15,14 +15,25 @@ class UserForm(FlaskForm):
                         render_kw={"class": "form-control", "placeholder": "Enter your email"})
     submit = SubmitField('Submit', render_kw={"class": "btn btn-primary"})
 
+    def __init__(self, original_username=None, original_email=None, *args, **kwargs):
+        super(UserForm, self).__init__(*args, **kwargs)
+        self.original_username = original_username
+        self.original_email = original_email
+
     # Custom validator untuk memastikan username unik
     def validate_username(self, username):
+        # Jika mode edit dan username tidak berubah, tidak perlu validasi unik
+        if self.original_username and self.original_username == username.data:
+            return
         user = User.query.filter_by(username=username.data).first()
         if user:
             raise ValidationError('Username sudah digunakan. Silakan pilih username lain.')
 
     # Custom validator untuk memastikan email unik
     def validate_email(self, email):
+        # Jika mode edit dan email tidak berubah, tidak perlu validasi unik
+        if self.original_email and self.original_email == email.data:
+            return
         user = User.query.filter_by(email=email.data).first()
         if user:
             raise ValidationError('Email sudah digunakan. Silakan pilih email lain.')
@@ -55,13 +66,13 @@ def create():
             return render_template('users/new.html', form=form)
     
 def edit(id):
-    form = UserForm()
     data = User.query.get_or_404(id)
+    form = UserForm(original_username=data.username, original_email=data.email)
     return render_template('users/edit.html', data=data, form=form)
 
 def update(id):
-    form = UserForm()
     user = User.query.get_or_404(id)
+    form = UserForm(original_username=user.username, original_email=user.email)
     if request.method == 'POST':
         if form.validate_on_submit():
             user.username = request.form['username']
