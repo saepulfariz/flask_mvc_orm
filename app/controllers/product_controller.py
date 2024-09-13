@@ -20,6 +20,7 @@ class ProductForm(FlaskForm):
     submit = SubmitField('Submit', render_kw={"class": "btn btn-primary"})
 
 def index():
+    form = FlaskForm()
     # data = Product.query.all()
    
     # data = db.session.query(User.username, Product).join(Product).all()
@@ -41,7 +42,7 @@ def index():
 
     data = Product.query.all()
 
-    return render_template('products/index.html', data=data)
+    return render_template('products/index.html', data=data, form=form)
 
 def new():
     form = ProductForm()
