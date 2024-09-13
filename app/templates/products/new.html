@@ -33,7 +33,8 @@
             {% endfor %}
         </select>
         <br>
-        <button type="submit">Create</button>
+        {{ form.submit() }}
+        <a href="{{ url_for('products.index') }}">Back</a>
     </form>
 </body>
 
