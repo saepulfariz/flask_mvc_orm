@@ -26,12 +26,11 @@
         <span style="color: red;">{{ form.stock.errors[0] }}</span>
         {% endif %}
         <br>
-        <label for="users">Users:</label>
-        <select name="user_id" id="user_id">
-            {% for d in data.users %}
-            <option value="{{ d.id }}">{{ d.username }}</option>
-            {% endfor %}
-        </select>
+        {{ form.user_id.label }}
+        {{ form.user_id(class_="form-control") }}
+        {% if form.user_id.errors %}
+        <span style="color: red;">{{ form.user_id.errors[0] }}</span>
+        {% endif %}
         <br>
         {{ form.submit() }}
         <a href="{{ url_for('products.index') }}">Back</a>

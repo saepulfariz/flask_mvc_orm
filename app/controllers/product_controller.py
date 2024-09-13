@@ -4,7 +4,7 @@ from app import db
 from sqlalchemy import text 
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, ValidationError, IntegerField, FloatField, DecimalField
+from wtforms import StringField, SubmitField, ValidationError, IntegerField, FloatField, DecimalField, SelectField
 from wtforms.validators import DataRequired, Length
 
 class ProductForm(FlaskForm):
@@ -17,7 +17,13 @@ class ProductForm(FlaskForm):
     stock = IntegerField('Stock', 
                         validators=[DataRequired()], 
                         render_kw={"class": "form-control", "placeholder": "Enter your stock"})
+    user_id = SelectField('Pilih User', choices=[], coerce=int, validate_choice=False)
     submit = SubmitField('Submit', render_kw={"class": "btn btn-primary"})
+
+    def validate_user_id(self, field):
+        user = User.query.get(field.data)
+        if not user:
+            raise ValidationError('User tidak valid. Silakan pilih user yang benar.')
 
 def index():
     form = FlaskForm()
@@ -49,6 +55,8 @@ def new():
     data = {
         'users' : User.query.all()
     }
+    # Isi pilihan SelectField dengan user.id dan user.username
+    form.user_id.choices = [(user.id, user.username) for user in data['users']]
     return render_template('products/new.html', data=data, form=form)
 
 def create():
@@ -68,6 +76,8 @@ def create():
             data = {
                 'users' : User.query.all()
             }
+            # Isi pilihan SelectField dengan user.id dan user.username
+            form.user_id.choices = [(user.id, user.username) for user in data['users']]
             return render_template('products/new.html', data=data, form=form)
     
 def edit(id):
