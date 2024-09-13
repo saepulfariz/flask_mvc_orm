@@ -10,14 +10,21 @@
 <body>
     <h1>Create Product</h1>
     <form action="{{ url_for('products.create') }}" method="post">
-        <label for="name">Name:</label>
-        <input type="text" name="name" id="name">
+        {{ form.csrf_token }}
+        {{ form.name.label }} {{ form.name() }}
+        {% if form.name.errors %}
+        <span style="color: red;">{{ form.name.errors[0] }}</span>
+        {% endif %}
         <br>
-        <label for="price">Price:</label>
-        <input type="text" name="price" id="price">
+        {{ form.price.label }} {{ form.price() }}
+        {% if form.price.errors %}
+        <span style="color: red;">{{ form.price.errors[0] }}</span>
+        {% endif %}
         <br>
-        <label for="stock">Stock:</label>
-        <input type="text" name="stock" id="stock">
+        {{ form.stock.label }} {{ form.stock() }}
+        {% if form.stock.errors %}
+        <span style="color: red;">{{ form.stock.errors[0] }}</span>
+        {% endif %}
         <br>
         <label for="users">Users:</label>
         <select name="user_id" id="user_id">

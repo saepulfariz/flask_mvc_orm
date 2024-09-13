@@ -3,6 +3,22 @@ from app.models import Product, User
 from app import db
 from sqlalchemy import text 
 
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField, ValidationError, IntegerField, FloatField, DecimalField
+from wtforms.validators import DataRequired, Length
+
+class ProductForm(FlaskForm):
+    name = StringField('Name', 
+                           validators=[DataRequired(message="Name tidak boleh kosong."), Length(min=3, max=50,message="Name harus antara 3 sampai 50 karakter.")], 
+                           render_kw={"class": "form-control", "placeholder": "Enter your Name"})
+    price = DecimalField('Price', 
+                        validators=[DataRequired()], 
+                        render_kw={"class": "form-control", "placeholder": "Enter your price"})
+    stock = IntegerField('Stock', 
+                        validators=[DataRequired()], 
+                        render_kw={"class": "form-control", "placeholder": "Enter your stock"})
+    submit = SubmitField('Submit', render_kw={"class": "btn btn-primary"})
+
 def index():
     # data = Product.query.all()
    
@@ -28,22 +44,30 @@ def index():
     return render_template('products/index.html', data=data)
 
 def new():
+    form = ProductForm()
     data = {
         'users' : User.query.all()
     }
-    return render_template('products/new.html', data=data)
+    return render_template('products/new.html', data=data, form=form)
 
 def create():
+    form = ProductForm()
     if request.method == 'POST':
-        name = request.form['name']
-        price = request.form['price']
-        stock = request.form['stock']
-        user_id = request.form['user_id']
-        product = Product(name=name, price=price, stock=stock,user_id=user_id )
-        db.session.add(product)
-        db.session.commit()
-        flash('Product created successfully!', 'message')
-        return redirect(url_for('products.index'))
+        if form.validate_on_submit():
+            name = request.form['name']
+            price = request.form['price']
+            stock = request.form['stock']
+            user_id = request.form['user_id']
+            product = Product(name=name, price=price, stock=stock,user_id=user_id )
+            db.session.add(product)
+            db.session.commit()
+            flash('Product created successfully!', 'message')
+            return redirect(url_for('products.index'))
+        else:
+            data = {
+                'users' : User.query.all()
+            }
+            return render_template('products/new.html', data=data, form=form)
     
 def edit(id):
     result = Product.query.get_or_404(id)
