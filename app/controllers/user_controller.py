@@ -8,7 +8,7 @@ from wtforms.validators import DataRequired, Length, Email
 
 class UserForm(FlaskForm):
     username = StringField('Username', 
-                           validators=[DataRequired(), Length(min=3, max=50)], 
+                           validators=[DataRequired(message="Username tidak boleh kosong."), Length(min=3, max=50,message="Username harus antara 3 sampai 50 karakter.")], 
                            render_kw={"class": "form-control", "placeholder": "Enter your username"})
     email = StringField('Email', 
                         validators=[DataRequired(), Email()], 
