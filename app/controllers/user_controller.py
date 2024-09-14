@@ -15,15 +15,28 @@ class UserForm(FlaskForm):
     email = StringField('Email', 
                         validators=[DataRequired(), Email()], 
                         render_kw={"class": "form-control", "placeholder": "Enter your email"})
-    password = PasswordField('Password', 
-                        validators=[DataRequired(), Length(min=3, max=50,message="Password harus antara 3 sampai 50 karakter.")], 
+    password = PasswordField('Password',
                         render_kw={"class": "form-control", "placeholder": "Enter your password"})
     submit = SubmitField('Submit', render_kw={"class": "btn btn-primary"})
+
+    # validators=[DataRequired(), Length(min=3, max=50,message="Password harus antara 3 sampai 50 karakter.")]
 
     def __init__(self, original_username=None, original_email=None, *args, **kwargs):
         super(UserForm, self).__init__(*args, **kwargs)
         self.original_username = original_username
         self.original_email = original_email
+
+        # Ambil argumen 'is_edit' dari kwargs, default False (create mode)
+        self.is_edit = kwargs.pop('is_edit', False)
+
+        # Hanya wajibkan email ketika bukan mode edit
+        if not self.is_edit:
+            # jika False
+            # validation ada setelah di submit, required dan min max length
+            self.password.validators = [DataRequired(), Length(min=3, max=50,message="Password harus antara 3 sampai 50 karakter.")]
+            # self.password.validators.append(DataRequired(), Length(min=3, max=50,message="Password harus antara 3 sampai 50 karakter."))
+        
+
 
     # Custom validator untuk memastikan username unik
     def validate_username(self, username):
@@ -74,12 +87,12 @@ def create():
     
 def edit(id):
     data = User.query.get_or_404(id)
-    form = UserForm(original_username=data.username, original_email=data.email)
+    form = UserForm(original_username=data.username, original_email=data.email, is_edit=True)
     return render_template('users/edit.html', data=data, form=form)
 
 def update(id):
     user = User.query.get_or_404(id)
-    form = UserForm(original_username=user.username, original_email=user.email)
+    form = UserForm(original_username=user.username, original_email=user.email, is_edit=True)
     if request.method == 'POST':
         if form.validate_on_submit():
             user.username = request.form['username']
