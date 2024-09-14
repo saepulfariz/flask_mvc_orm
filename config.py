@@ -40,6 +40,7 @@ class Config:
 
     # Konfigurasi untuk SQL Server
     SQLALCHEMY_BINDS = {
-        'sqlserver': 'mssql+pyodbc://Traceability:ability@172.21.202.142/PCS?driver=ODBC+Driver+17+for+SQL+Server',
+        # 'sqlserver': 'mssql+pyodbc://Traceability:ability@172.21.202.142/PCS?driver=ODBC+Driver+17+for+SQL+Server',
+        'sqlserver': 'sqlite:///app.db',
         'sqlite': 'sqlite:///app.db'
     }
