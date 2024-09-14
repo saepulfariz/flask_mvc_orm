@@ -17,7 +17,7 @@ class ProductForm(FlaskForm):
     stock = IntegerField('Stock', 
                         validators=[DataRequired()], 
                         render_kw={"class": "form-control", "placeholder": "Enter your stock"})
-    user_id = SelectField('Pilih User', choices=[], coerce=int, validate_choice=False)
+    user_id = SelectField('Pilih User', choices=[], coerce=int, validate_choice=False, validators=[DataRequired()])
     submit = SubmitField('Submit', render_kw={"class": "btn btn-primary"})
 
     def validate_user_id(self, field):
@@ -87,6 +87,8 @@ def edit(id):
         'users' : User.query.all(),
         'data' : result
     }
+    form.user_id.choices = [(user.id, user.username) for user in data['users']]
+    form.user_id.data = result.user_id  # Pre-select pilihan dropdown
     return render_template('products/edit.html', data=data, form=form)
 
 def update(id):
