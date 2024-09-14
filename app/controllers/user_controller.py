@@ -3,8 +3,10 @@ from app.models import User, Student, PcsModel
 from app import db
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, ValidationError
+from wtforms import StringField, SubmitField, ValidationError, PasswordField
 from wtforms.validators import DataRequired, Length, Email
+
+from passlib.hash import pbkdf2_sha256
 
 class UserForm(FlaskForm):
     username = StringField('Username', 
@@ -13,6 +15,9 @@ class UserForm(FlaskForm):
     email = StringField('Email', 
                         validators=[DataRequired(), Email()], 
                         render_kw={"class": "form-control", "placeholder": "Enter your email"})
+    password = PasswordField('Password', 
+                        validators=[DataRequired(), Length(min=3, max=50,message="Password harus antara 3 sampai 50 karakter.")], 
+                        render_kw={"class": "form-control", "placeholder": "Enter your password"})
     submit = SubmitField('Submit', render_kw={"class": "btn btn-primary"})
 
     def __init__(self, original_username=None, original_email=None, *args, **kwargs):
@@ -57,7 +62,9 @@ def create():
         if form.validate_on_submit():
             username = request.form['username']
             email = request.form['email']
-            user = User(username=username, email=email)
+            password = request.form['password']
+            password = pbkdf2_sha256.hash(password)
+            user = User(username=username, email=email, password=password)
             db.session.add(user)
             db.session.commit()
             flash('User created successfully!', 'message')
