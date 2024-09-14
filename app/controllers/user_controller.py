@@ -84,6 +84,8 @@ def update(id):
         if form.validate_on_submit():
             user.username = request.form['username']
             user.email = request.form['email']
+            password = request.form['password']
+            user.password = pbkdf2_sha256.hash(password)
             db.session.commit()
             flash('User updated successfully!', 'message')
             return redirect(url_for('users.index'))
