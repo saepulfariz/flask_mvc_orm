@@ -3,11 +3,11 @@ from dotenv import load_dotenv
 load_dotenv()
 
 def db_uri(var_db = 'default'):
-    db_hostname = os.environ['database.'+var_db+'.hostname']
-    db_name = os.environ['database.'+var_db+'.database']
-    db_username = os.environ['database.'+var_db+'.username']
-    db_password = os.environ['database.'+var_db+'.password']
-    db_driver = os.environ['database.'+var_db+'.DBDriver']
+    db_hostname = os.getenv('database.'+var_db+'.hostname')
+    db_name = os.getenv('database.'+var_db+'.database')
+    db_username = os.getenv('database.'+var_db+'.username')
+    db_password = os.getenv('database.'+var_db+'.password')
+    db_driver = os.getenv('database.'+var_db+'.DBDriver')
 
     db_uri = ''
 
