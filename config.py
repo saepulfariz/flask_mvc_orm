@@ -1,8 +1,17 @@
 import os
 
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
+default_hostname = os.environ['database.default.hostname']
+default_database = os.environ['database.default.database']
+default_username = os.environ['database.default.username']
+default_password = os.environ['database.default.password']
+
 class Config:
     # Konfigurasi untuk MySQL
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:@localhost/flask_mvc_orm'
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://'+default_username+':'+default_password+'@'+default_hostname+'/'+default_database
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # SECRET_KEY = os.urandom(32)
