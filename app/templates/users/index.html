@@ -14,7 +14,7 @@
         {% for d in data %}
         <!-- {{ d.username|e }} -->
         <!-- {{ d.username|safe }} -->
-        <li>{{ d.username|safe }} - {{ d.email }} - {{ d.products }}
+        <li>{{ d.username }} - {{ d.email }} - {{ d.products }}
             <a href="{{ url_for('users.edit', id=d.id) }}">Edit</a>
             <form action="{{ url_for('users.delete', id=d.id) }}" method="post" style="display:inline;">
                 {{ form.csrf_token }}
