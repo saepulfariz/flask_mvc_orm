@@ -16,6 +16,10 @@ def db_uri(var_db = 'default'):
         db_uri = db_driver+'://'+db_username+':'+db_password+'@'+db_hostname+'/'+db_name
     elif db_driver == 'SQLite3':
         db_uri = 'sqlite:///'+db_name
+    elif db_driver == 'sqlsrv':
+        db_driver = 'mssql+pyodbc'
+        db_uri = db_driver+'://'+db_username+':'+db_password+'@'+db_hostname+'/'+db_name+'?driver=ODBC+Driver+17+for+SQL+Server'
+
 
     return db_uri
 
@@ -59,7 +63,7 @@ class Config:
 
     # Konfigurasi untuk SQL Server
     SQLALCHEMY_BINDS = {
-        # 'sqlserver': 'mssql+pyodbc://Traceability:ability@172.21.202.142/PCS?driver=ODBC+Driver+17+for+SQL+Server',
+        # 'sqlserver': db_uri('sqlserver'),
         'sqlserver': db_uri('sqlite'),
         'sqlite': db_uri('sqlite')
     }

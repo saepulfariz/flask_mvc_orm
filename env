@@ -10,6 +10,13 @@ database.default.username = root
 database.default.password = 
 database.default.DBDriver = MySQLi
 
+
 # setting env / location db instance/app.db
 database.sqlite.database = "app.db"
 database.sqlite.DBDriver = SQLite3
+
+database.sqlserver.hostname = localhost
+database.sqlserver.database = PCS
+database.sqlserver.username = root
+database.sqlserver.password = 
+database.sqlserver.DBDriver = sqlsrv
