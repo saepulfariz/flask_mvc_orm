@@ -1,17 +1,22 @@
 import os
-
-import os
 from dotenv import load_dotenv
 load_dotenv()
 
-default_hostname = os.environ['database.default.hostname']
-default_database = os.environ['database.default.database']
-default_username = os.environ['database.default.username']
-default_password = os.environ['database.default.password']
+def db_uri(var_db = 'default'):
+    db_hostname = os.environ['database.'+var_db+'.hostname']
+    db_name = os.environ['database.'+var_db+'.database']
+    db_username = os.environ['database.'+var_db+'.username']
+    db_password = os.environ['database.'+var_db+'.password']
+    db_driver = os.environ['database.'+var_db+'.DBDriver']
+
+    if db_driver == 'MySQLi':
+        db_driver = 'mysql+pymysql'
+
+    return db_driver+'://'+db_username+':'+db_password+'@'+db_hostname+'/'+db_name
 
 class Config:
     # Konfigurasi untuk MySQL
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://'+default_username+':'+default_password+'@'+default_hostname+'/'+default_database
+    SQLALCHEMY_DATABASE_URI = db_uri('default')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # SECRET_KEY = os.urandom(32)
