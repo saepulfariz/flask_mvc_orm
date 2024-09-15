@@ -9,3 +9,7 @@ database.default.database = flask_mvc_orm
 database.default.username = root
 database.default.password = 
 database.default.DBDriver = MySQLi
+
+# setting env / location db instance/app.db
+database.sqlite.database = "app.db"
+database.sqlite.DBDriver = SQLite3
