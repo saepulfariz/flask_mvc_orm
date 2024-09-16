@@ -1,45 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'template/index.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Users</title>
-</head>
+{% block content %}
+<h1>Users</h1>
+<a href="{{ url_for('users.new') }}">Create User</a>
+<ul>
+    {% for d in data %}
+    <!-- {{ d.username|e }} -->
+    <!-- {{ d.username|safe }} -->
+    <li>{{ d.username }} - {{ d.email }} - {{ d.products }}
+        <a href="{{ url_for('users.edit', id=d.id) }}">Edit</a>
+        <form action="{{ url_for('users.delete', id=d.id) }}" method="post" style="display:inline;">
+            <input type="hidden" name="_method" value="DELETE" />
+            {{ form.csrf_token }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+    {% endfor %}
+</ul>
 
-<body>
-    <h1>Users</h1>
-    <a href="{{ url_for('users.new') }}">Create User</a>
-    <ul>
-        {% for d in data %}
-        <!-- {{ d.username|e }} -->
-        <!-- {{ d.username|safe }} -->
-        <li>{{ d.username }} - {{ d.email }} - {{ d.products }}
-            <a href="{{ url_for('users.edit', id=d.id) }}">Edit</a>
-            <form action="{{ url_for('users.delete', id=d.id) }}" method="post" style="display:inline;">
-                <input type="hidden" name="_method" value="DELETE" />
-                {{ form.csrf_token }}
-                <button type="submit">Delete</button>
-            </form>
-        </li>
-        {% endfor %}
-    </ul>
+<h1>Data Student</h1>
+<ul>
+    {% for d in students %}
+    <li>{{ d.name }}
+    </li>
+    {% endfor %}
+</ul>
 
-    <h1>Data Student</h1>
-    <ul>
-        {% for d in students %}
-        <li>{{ d.name }}
-        </li>
-        {% endfor %}
-    </ul>
 
-    {% with messages = get_flashed_messages(category_filter=["message"]) %}
-    {% if messages %}
-    <script>
-        alert('{{ messages[0] }}')
-    </script>
-    {% endif %}
-    {% endwith %}
-</body>
 
-</html>
+{% endblock %}

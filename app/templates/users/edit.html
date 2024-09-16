@@ -1,35 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'template/index.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit User</title>
-</head>
-
-<body>
-    <h1>Edit User</h1>
-    <form action="{{ url_for('users.update', id=data.id) }}" method="post">
-        <input type="hidden" name="_method" value="PUT" />
-        {{ form.csrf_token }}
-        {{ form.username.label }} {{ form.username(size=20, value=data.username) }}
-        {% if form.username.errors %}
-        <span style="color: red;">{{ form.username.errors[0] }}</span>
-        {% endif %}
-        <br>
-        {{ form.email.label }} {{ form.email(size=20, value=data.email) }}
-        {% if form.email.errors %}
-        <span style="color: red;">{{ form.email.errors[0] }}</span>
-        {% endif %}
-        <br>
-        {{ form.password.label }} {{ form.password() }}
-        {% if form.password.errors %}
-        <span style="color: red;">{{ form.password.errors[0] }}</span>
-        {% endif %}
-        <br>
-        {{ form.submit() }}
-        <a href="{{ url_for('users.index') }}">Back</a>
-    </form>
-</body>
-
-</html>
+{% block content %}
+<h1>Edit User</h1>
+<form action="{{ url_for('users.update', id=data.id) }}" method="post">
+    <input type="hidden" name="_method" value="PUT" />
+    {{ form.csrf_token }}
+    {{ form.username.label }} {{ form.username(size=20, value=data.username) }}
+    {% if form.username.errors %}
+    <span style="color: red;">{{ form.username.errors[0] }}</span>
+    {% endif %}
+    <br>
+    {{ form.email.label }} {{ form.email(size=20, value=data.email) }}
+    {% if form.email.errors %}
+    <span style="color: red;">{{ form.email.errors[0] }}</span>
+    {% endif %}
+    <br>
+    {{ form.password.label }} {{ form.password() }}
+    {% if form.password.errors %}
+    <span style="color: red;">{{ form.password.errors[0] }}</span>
+    {% endif %}
+    <br>
+    {{ form.submit() }}
+    <a href="{{ url_for('users.index') }}">Back</a>
+</form>
+{% endblock %}
