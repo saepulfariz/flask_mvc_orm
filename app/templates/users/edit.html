@@ -10,6 +10,7 @@
 <body>
     <h1>Edit User</h1>
     <form action="{{ url_for('users.update', id=data.id) }}" method="post">
+        <input type="hidden" name="_method" value="PUT" />
         {{ form.csrf_token }}
         {{ form.username.label }} {{ form.username(size=20, value=data.username) }}
         {% if form.username.errors %}

@@ -22,7 +22,7 @@ def create():
 def edit(id):
     return user_controller.edit(id)
 
-@users.route('/users/<int:id>', methods=['POST'])
+@users.route('/users/<int:id>', methods=['PUT', 'PATCH'])
 def update(id):
     return user_controller.update(id)
 

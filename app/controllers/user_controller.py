@@ -93,18 +93,19 @@ def edit(id):
 def update(id):
     user = User.query.get_or_404(id)
     form = UserForm(original_username=user.username, original_email=user.email, is_edit=True)
-    if request.method == 'POST':
-        if form.validate_on_submit():
-            user.username = request.form['username']
-            user.email = request.form['email']
-            password = request.form['password']
-            user.password = pbkdf2_sha256.hash(password)
-            db.session.commit()
-            flash('User updated successfully!', 'message')
-            return redirect(url_for('users.index'))
-        else:
-            data = User.query.get_or_404(id)
-            return render_template('users/edit.html', data=data, form=form)
+    # print(request.method)
+    if form.validate_on_submit():
+        user.username = request.form['username']
+        user.email = request.form['email']
+        password = request.form['password']
+        user.password = pbkdf2_sha256.hash(password)
+        db.session.commit()
+        flash('User updated successfully!', 'message')
+        return redirect(url_for('users.index'))
+    else:
+        data = User.query.get_or_404(id)
+        return render_template('users/edit.html', data=data, form=form)
+        
     
 def delete(id):
     user = User.query.get_or_404(id)
