@@ -94,22 +94,21 @@ def edit(id):
 def update(id):
     product = Product.query.get_or_404(id)
     form = ProductForm()
-    if request.method == 'POST':
-        if form.validate_on_submit():
-            product.name = request.form['name']
-            product.price = request.form['price']
-            product.stock = request.form['stock']
-            product.user_id = request.form['user_id']
-            db.session.commit()
-            flash('Product updated successfully!', 'message')
-            return redirect(url_for('products.index'))
-        else:
-            result = Product.query.get_or_404(id)
-            data = {
-                'users' : User.query.all(),
-                'data' : result
-            }
-            return render_template('products/edit.html', data=data, form=form)
+    if form.validate_on_submit():
+        product.name = request.form['name']
+        product.price = request.form['price']
+        product.stock = request.form['stock']
+        product.user_id = request.form['user_id']
+        db.session.commit()
+        flash('Product updated successfully!', 'message')
+        return redirect(url_for('products.index'))
+    else:
+        result = Product.query.get_or_404(id)
+        data = {
+            'users' : User.query.all(),
+            'data' : result
+        }
+        return render_template('products/edit.html', data=data, form=form)
     
 def delete(id):
     product = Product.query.get_or_404(id)
