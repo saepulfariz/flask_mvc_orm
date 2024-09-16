@@ -10,6 +10,7 @@
 <body>
     <h1>Update Product</h1>
     <form action="{{ url_for('products.update', id=data.data.id) }}" method="post">
+        <input type="hidden" name="_method" value="PUT" />
         {{ form.csrf_token }}
         {{ form.name.label }} {{ form.name(value=data.data.name) }}
         {% if form.name.errors %}

@@ -20,7 +20,7 @@ def create():
 def edit(id):
     return product_controller.edit(id)
 
-@products.route('/products/<int:id>', methods=['POST'])
+@products.route('/products/<int:id>',  methods=['PUT', 'PATCH'])
 def update(id):
     return product_controller.update(id)
 
