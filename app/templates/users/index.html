@@ -17,6 +17,7 @@
         <li>{{ d.username }} - {{ d.email }} - {{ d.products }}
             <a href="{{ url_for('users.edit', id=d.id) }}">Edit</a>
             <form action="{{ url_for('users.delete', id=d.id) }}" method="post" style="display:inline;">
+                <input type="hidden" name="_method" value="DELETE" />
                 {{ form.csrf_token }}
                 <button type="submit">Delete</button>
             </form>
