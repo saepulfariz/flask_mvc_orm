@@ -26,6 +26,6 @@ def edit(id):
 def update(id):
     return user_controller.update(id)
 
-@users.route('/users/<int:id>/delete', methods=['DELETE'])
+@users.route('/users/<int:id>', methods=['DELETE'])
 def delete(id):
     return user_controller.delete(id)
