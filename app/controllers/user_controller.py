@@ -63,11 +63,19 @@ def index():
     print(Student.get_student())
     # print(PcsModel.getProductionData('V01'))
     students = Student.get_student()
+
+    data = {
+        'title' : 'View Users',
+        'data' : data
+    }
     return render_template('users/index.html', data=data, students = students, form=form)
 
 def new():
     form = UserForm()
-    return render_template('users/new.html', form=form)
+    data = {
+        'title' : 'New user',
+    }
+    return render_template('users/new.html', data=data, form=form)
 
 def create():
     form = UserForm()
@@ -86,8 +94,12 @@ def create():
             return render_template('users/new.html', form=form)
     
 def edit(id):
-    data = User.query.get_or_404(id)
-    form = UserForm(original_username=data.username, original_email=data.email, is_edit=True)
+    result = User.query.get_or_404(id)
+    form = UserForm(original_username=result.username, original_email=result.email, is_edit=True)
+    data = {
+        'title' : 'Edit user',
+        'data' : result
+    }
     return render_template('users/edit.html', data=data, form=form)
 
 def update(id):

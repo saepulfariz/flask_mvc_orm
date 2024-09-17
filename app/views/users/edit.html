@@ -2,15 +2,15 @@
 
 {% block content %}
 <h1>Edit User</h1>
-<form action="{{ url_for('users.update', id=data.id) }}" method="post">
+<form action="{{ url_for('users.update', id=data.data.id) }}" method="post">
     <input type="hidden" name="_method" value="PUT" />
     {{ form.csrf_token }}
-    {{ form.username.label }} {{ form.username(size=20, value=data.username) }}
+    {{ form.username.label }} {{ form.username(size=20, value=data.data.username) }}
     {% if form.username.errors %}
     <span style="color: red;">{{ form.username.errors[0] }}</span>
     {% endif %}
     <br>
-    {{ form.email.label }} {{ form.email(size=20, value=data.email) }}
+    {{ form.email.label }} {{ form.email(size=20, value=data.data.email) }}
     {% if form.email.errors %}
     <span style="color: red;">{{ form.email.errors[0] }}</span>
     {% endif %}

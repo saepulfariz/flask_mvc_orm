@@ -4,7 +4,7 @@
 <h1>Users</h1>
 <a href="{{ url_for('users.new') }}">Create User</a>
 <ul>
-    {% for d in data %}
+    {% for d in data.data %}
     <!-- {{ d.username|e }} -->
     <!-- {{ d.username|safe }} -->
     <li>{{ d.username }} - {{ d.email }} - {{ d.products }}
