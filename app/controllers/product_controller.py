@@ -48,11 +48,17 @@ def index():
 
     data = Product.query.all()
 
+    data = {
+        'title' : 'View products',
+        'data' : data
+    }
+
     return render_template('products/index.html', data=data, form=form)
 
 def new():
     form = ProductForm()
     data = {
+        'title' : 'New product',
         'users' : User.query.all()
     }
     # Isi pilihan SelectField dengan user.id dan user.username
@@ -84,6 +90,7 @@ def edit(id):
     result = Product.query.get_or_404(id)
     form = ProductForm()
     data = {
+        'title' : 'Edit product',
         'users' : User.query.all(),
         'data' : result
     }

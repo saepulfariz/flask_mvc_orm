@@ -4,7 +4,7 @@
 <h1>Products</h1>
 <a href="{{ url_for('products.new') }}">Create Product</a>
 <ul>
-    {% for d in data %}
+    {% for d in data.data %}
     <li>{{ d.name }} - ${{ d.price }} (Stock: {{ d.stock }}) (User: {{ d.user.username }})
         <a href="{{ url_for('products.edit', id=d.id) }}">Edit</a>
         <form action="{{ url_for('products.delete', id=d.id) }}" method="post" style="display:inline;">
