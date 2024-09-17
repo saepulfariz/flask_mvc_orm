@@ -17,3 +17,5 @@ flask db upgrade
 
 
 flask db merge
+
+flask run

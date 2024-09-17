@@ -1,4 +1,4 @@
-from app import db, db_sqlserver
+from app import db
 from .base_model import BaseModel
 from sqlalchemy import text 
 from sqlalchemy.orm import sessionmaker
