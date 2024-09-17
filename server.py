@@ -1,5 +1,5 @@
 from app import create_app, db
-from config import Config
+from app.config.config import Config
 from flask_migrate import Migrate
 
 # from app.views import main
@@ -10,11 +10,11 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
-app_host = os.environ['FLASK_RUN_HOST']
-app_port = os.environ['FLASK_RUN_PORT']
-app_debug = os.environ['FLASK_DEBUG']
-app_name = os.environ['FLASK_APP']
-app_reverse_proxy = os.environ['FLASK_REVERSE_PROXY']
+app_host = os.getenv('FLASK_RUN_HOST')
+app_port = os.getenv('FLASK_RUN_PORT')
+app_debug = os.getenv('FLASK_DEBUG')
+app_name = os.getenv('FLASK_APP')
+app_reverse_proxy = os.getenv('FLASK_REVERSE_PROXY')
 
 migrate = Migrate() #define migration
 
