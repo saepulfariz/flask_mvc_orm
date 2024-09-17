@@ -1,6 +1,6 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
-from flask_wtf.csrf import CSRFProtect
+from flask_wtf.csrf import CSRFProtect, CSRFError
 
 from app.config.config import Config
 
@@ -9,7 +9,6 @@ from flask_migrate import Migrate
 import os
 from dotenv import load_dotenv
 load_dotenv()
-
 
 from app.middleware.method_spoofer import CustomRequest, MethodSpooferMiddleware
 
@@ -38,11 +37,16 @@ with app.app_context():
     app.register_blueprint(routes.main, url_prefix='/')
     app.register_blueprint(routes.users, url_prefix='/')
     app.register_blueprint(routes.products, url_prefix='/')
-    # app.register_blueprint(views.main, url_prefix='/')
-    # app.register_blueprint(views.user, url_prefix='/')
-    # app.register_blueprint(views.product, url_prefix='/')
 
     db.create_all()
+
+
+@app.errorhandler(CSRFError)
+def handle_csrf_error(e):
+    data = {
+        'title' : 'Token is required'
+    }
+    return render_template('errors/csrf.html', reason=e.description, data=data), 400
 
 app_host = os.getenv('FLASK_RUN_HOST')
 app_port = os.getenv('FLASK_RUN_PORT')
