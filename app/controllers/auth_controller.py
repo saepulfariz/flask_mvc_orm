@@ -5,6 +5,8 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField
 from wtforms.validators import DataRequired, Length
 
+from passlib.hash import pbkdf2_sha256
+
 class LoginFrom(FlaskForm):
     username = StringField('Username', 
                            validators=[DataRequired(message="Username tidak boleh kosong."), Length(min=3, max=50,message="Username harus antara 3 sampai 50 karakter.")], 
@@ -31,8 +33,15 @@ def verify() :
             (User.username ==username) | (User.email== username)
         ).first()
         if data : 
-            flash('User valid', 'message')
-            return redirect(url_for('auth.index'))
+            hash = data.password
+
+            if (pbkdf2_sha256.verify(password, hash)) :
+                flash('User valid', 'message')
+                return redirect(url_for('auth.index'))
+            else:
+                flash('Password wrong', 'message')
+                return redirect(url_for('auth.index'))
+                                 
         else: 
             flash('User not found', 'message')
             return redirect(url_for('auth.index'))
