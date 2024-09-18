@@ -11,3 +11,7 @@ def index():
 @auth.route('/',  methods=['POST'])
 def verify():
     return auth_controller.verify()
+
+@auth.route('/logout',  methods=['GET'])
+def logout():
+    return auth_controller.logout()

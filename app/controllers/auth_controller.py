@@ -52,3 +52,8 @@ def verify() :
             'title' : 'Login'
         }
         return render_template('auth/login.html', data=data, form=form) 
+    
+def logout() : 
+    session.pop('id', None)
+    session.pop('username', None)
+    return redirect(url_for('auth.index'))
