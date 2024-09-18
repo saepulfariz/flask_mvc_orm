@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<h1>Login Page</h1>
+<h1>Login Page - {{ session['username'] }}</h1>
 <form action="{{ url_for('auth.verify') }}" method="post">
     {{ form.csrf_token }}
     {{ form.username.label }} {{ form.username(size=20) }}

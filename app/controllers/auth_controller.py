@@ -1,4 +1,4 @@
-from flask import request, redirect, url_for, render_template, flash
+from flask import request, redirect, url_for, render_template, flash, session
 from app.models import User
 
 from flask_wtf import FlaskForm
@@ -36,6 +36,8 @@ def verify() :
             hash = data.password
 
             if (pbkdf2_sha256.verify(password, hash)) :
+                session['id'] = data.id
+                session['username'] = username
                 flash('User valid', 'message')
                 return redirect(url_for('auth.index'))
             else:
