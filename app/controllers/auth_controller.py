@@ -26,7 +26,10 @@ def verify() :
         username = request.form['username']
         password = request.form['password']
 
-        data = User.query.filter_by(username=username).first()
+        # data = User.query.filter_by(username=username).first()
+        data = User.query.filter(
+            (User.username ==username) | (User.email== username)
+        ).first()
         if data : 
             flash('User valid', 'message')
             return redirect(url_for('auth.index'))
