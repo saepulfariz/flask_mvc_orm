@@ -37,6 +37,7 @@ with app.app_context():
     app.register_blueprint(routes.main, url_prefix='/')
     app.register_blueprint(routes.users, url_prefix='/')
     app.register_blueprint(routes.products, url_prefix='/')
+    app.register_blueprint(routes.auth, url_prefix='/auth')
 
     db.create_all()
 
