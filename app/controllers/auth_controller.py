@@ -1,4 +1,5 @@
 from flask import request, redirect, url_for, render_template, flash
+from app.models import User
 
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField
@@ -18,3 +19,22 @@ def index() :
         'title' : 'Login'
     }
     return render_template('auth/login.html', data=data, form=form) 
+
+def verify() : 
+    form = LoginFrom()
+    if form.validate_on_submit():
+        username = request.form['username']
+        password = request.form['password']
+
+        data = User.query.filter_by(username=username).first()
+        if data : 
+            flash('User valid', 'message')
+            return redirect(url_for('auth.index'))
+        else: 
+            flash('User not found', 'message')
+            return redirect(url_for('auth.index'))
+    else:
+        data = {
+            'title' : 'Login'
+        }
+        return render_template('auth/login.html', data=data, form=form) 
