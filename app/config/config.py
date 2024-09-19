@@ -12,11 +12,11 @@ def db_uri(var_db = 'default'):
 
     db_uri = ''
 
-    if db_driver == 'mysqli':
+    if (db_driver == 'mysqli') or (db_driver == 'mysql'):
         # MySQLi
         db_driver = 'mysql+pymysql'
         db_uri = db_driver+'://'+db_username+':'+db_password+'@'+db_hostname+'/'+db_name
-    elif db_driver == 'sqlite3':
+    elif (db_driver == 'sqlite3') or (db_driver == 'sqlite'):
         # SQLite3
         db_uri = 'sqlite:///'+db_name
     elif db_driver == 'sqlsrv':
