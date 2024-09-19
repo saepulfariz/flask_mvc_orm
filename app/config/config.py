@@ -8,13 +8,16 @@ def db_uri(var_db = 'default'):
     db_username = os.getenv('database.'+var_db+'.username')
     db_password = os.getenv('database.'+var_db+'.password')
     db_driver = os.getenv('database.'+var_db+'.DBDriver')
+    db_driver = db_driver.lower()
 
     db_uri = ''
 
-    if db_driver == 'MySQLi':
+    if db_driver == 'mysqli':
+        # MySQLi
         db_driver = 'mysql+pymysql'
         db_uri = db_driver+'://'+db_username+':'+db_password+'@'+db_hostname+'/'+db_name
-    elif db_driver == 'SQLite3':
+    elif db_driver == 'sqlite3':
+        # SQLite3
         db_uri = 'sqlite:///'+db_name
     elif db_driver == 'sqlsrv':
         db_driver = 'mssql+pyodbc'
