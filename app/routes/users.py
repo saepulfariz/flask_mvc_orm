@@ -1,5 +1,6 @@
 from flask import Blueprint
 from app.controllers import product_controller,home_controller,user_controller
+from app.middleware.auth import login_required
 
 users = Blueprint('users', __name__)
 
@@ -7,6 +8,7 @@ users = Blueprint('users', __name__)
 
 # User routes
 @users.route('/users', methods=['GET'])
+@login_required
 def index():
     return user_controller.index()
 
