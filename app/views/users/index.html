@@ -7,7 +7,7 @@
     {% for d in data.data %}
     <!-- {{ d.username|e }} -->
     <!-- {{ d.username|safe }} -->
-    <li>{{ d.username }} - {{ d.email }} - {{ d.products }}
+    <li>{{ d.username }} - {{ d.roles.title }} - {{ d.email }} - {{ d.products }}
         <a href="{{ url_for('users.edit', id=d.id) }}">Edit</a>
         <form action="{{ url_for('users.delete', id=d.id) }}" method="post" style="display:inline;">
             <input type="hidden" name="_method" value="DELETE" />
