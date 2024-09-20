@@ -93,9 +93,10 @@ def create():
         if form.validate_on_submit():
             username = request.form['username']
             email = request.form['email']
+            role_id = request.form['role_id']
             password = request.form['password']
             password = pbkdf2_sha256.hash(password)
-            user = User(username=username, email=email, password=password)
+            user = User(username=username, email=email, password=password, role_id=role_id)
             db.session.add(user)
             db.session.commit()
             flash('User created successfully!', 'message')
