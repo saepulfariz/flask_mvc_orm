@@ -109,8 +109,11 @@ def edit(id):
     form = UserForm(original_username=result.username, original_email=result.email, is_edit=True)
     data = {
         'title' : 'Edit user',
-        'data' : result
+        'data' : result,
+        'roles' : Role.query.all()
     }
+    form.role_id.choices = [(role.id, role.title) for role in data['roles']]
+    form.role_id.data = result.role_id  # Pre-select pilihan dropdown
     return render_template('users/edit.html', data=data, form=form)
 
 def update(id):
@@ -120,6 +123,7 @@ def update(id):
     if form.validate_on_submit():
         user.username = request.form['username']
         user.email = request.form['email']
+        user.role_id = request.form['role_id']
         password = request.form['password']
         user.password = pbkdf2_sha256.hash(password)
         db.session.commit()
