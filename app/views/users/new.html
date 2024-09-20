@@ -22,6 +22,13 @@
     <span style="color: red;">{{ form.password.errors[0] }}</span>
     {% endif %}
     <br>
+
+    {{ form.role_id.label }}
+    {{ form.role_id(class_="form-control") }}
+    {% if form.role_id.errors %}
+    <span style="color: red;">{{ form.role_id.errors[0] }}</span>
+    {% endif %}
+    <br>
     {{ form.submit() }}
     <a href="{{ url_for('users.index') }}">Back</a>
 </form>

@@ -1,9 +1,9 @@
 from flask import request, redirect, url_for, render_template, flash
-from app.models import User, Student, PcsModel
+from app.models import User, Student, PcsModel, Role
 from app import db
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, ValidationError, PasswordField
+from wtforms import StringField, SubmitField, ValidationError, PasswordField, SelectField
 from wtforms.validators import DataRequired, Length, Email
 
 from passlib.hash import pbkdf2_sha256
@@ -17,6 +17,8 @@ class UserForm(FlaskForm):
                         render_kw={"class": "form-control", "placeholder": "Enter your email"})
     password = PasswordField('Password',
                         render_kw={"class": "form-control", "placeholder": "Enter your password"})
+    
+    role_id = SelectField('Pilih Role', choices=[], coerce=int, validate_choice=False, validators=[DataRequired()])
     submit = SubmitField('Submit', render_kw={"class": "btn btn-primary"})
 
     # validators=[DataRequired(), Length(min=3, max=50,message="Password harus antara 3 sampai 50 karakter.")]
@@ -55,6 +57,11 @@ class UserForm(FlaskForm):
         user = User.query.filter_by(email=email.data).first()
         if user:
             raise ValidationError('Email sudah digunakan. Silakan pilih email lain.')
+        
+    def validate_role_id(self, field):
+        role = Role.query.get(field.data)
+        if not role:
+            raise ValidationError('Role tidak valid. Silakan pilih role yang benar.')
 
 def index():
     form = FlaskForm()
@@ -74,7 +81,10 @@ def new():
     form = UserForm()
     data = {
         'title' : 'New user',
+        'roles' : Role.query.all()
     }
+
+    form.role_id.choices = [(role.id, role.title) for role in data['roles']]
     return render_template('users/new.html', data=data, form=form)
 
 def create():
