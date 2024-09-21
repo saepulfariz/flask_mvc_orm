@@ -21,9 +21,10 @@ class RegisterForm(FlaskForm):
                            validators=[DataRequired(message="Username tidak boleh kosong."), Length(min=3, max=50,message="Username harus antara 3 sampai 50 karakter.")], 
                            render_kw={"class": "form-control", "placeholder": "Enter your username/Email"})
     password = PasswordField('Password',
+                             validators=[ Length(min=3,message="Password min 3")],
                         render_kw={"class": "form-control", "placeholder": "Enter your password"})
     confirm_password = PasswordField('Confirm Password',
-                                     validators=[EqualTo(fieldname="password", message="Password harus sama")],
+                                     validators=[EqualTo(fieldname="password", message="Password harus sama"), Length(min=3,message="Password min 3")],
                         render_kw={"class": "form-control", "placeholder": "Confirm your password"})
     email = StringField('Email', 
                         validators=[DataRequired(), Email()], 
