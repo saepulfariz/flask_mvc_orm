@@ -2,8 +2,8 @@ from flask import request, redirect, url_for, render_template, flash, session
 from app.models import User
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField
-from wtforms.validators import DataRequired, Length
+from wtforms import StringField, SubmitField, PasswordField, ValidationError
+from wtforms.validators import DataRequired, Length, Email, EqualTo
 
 from passlib.hash import pbkdf2_sha256
 
@@ -14,6 +14,30 @@ class LoginFrom(FlaskForm):
     password = PasswordField('Password',
                         render_kw={"class": "form-control", "placeholder": "Enter your password"})
     submit = SubmitField('Submit', render_kw={"class": "btn btn-primary"})
+
+class RegisterForm(FlaskForm):
+    username = StringField('Username', 
+                           validators=[DataRequired(message="Username tidak boleh kosong."), Length(min=3, max=50,message="Username harus antara 3 sampai 50 karakter.")], 
+                           render_kw={"class": "form-control", "placeholder": "Enter your username/Email"})
+    password = PasswordField('Password',
+                        render_kw={"class": "form-control", "placeholder": "Enter your password"})
+    confirm_password = PasswordField('Confirm Password',
+                                     validators=[EqualTo(fieldname="password", message="Password harus sama")],
+                        render_kw={"class": "form-control", "placeholder": "Confirm your password"})
+    email = StringField('Email', 
+                        validators=[DataRequired(), Email()], 
+                        render_kw={"class": "form-control", "placeholder": "Enter your email"})
+    submit = SubmitField('Submit', render_kw={"class": "btn btn-primary"})
+
+    def validate_email(self, email):
+        user = User.query.filter_by(email=email.data).first()
+        if user:
+            raise ValidationError('Email sudah digunakan. Silakan pilih email lain.')
+        
+    def validate_username(self, username):
+        user = User.query.filter_by(username=username.data).first()
+        if user:
+            raise ValidationError('Username sudah digunakan. Silakan pilih username lain.')
 
 def index() :
     form = LoginFrom()
@@ -55,10 +79,11 @@ def verify() :
         return render_template('auth/login.html', data=data, form=form) 
     
 def register() :
+    form = RegisterForm()
     data = {
         'title' : 'Register'
     }
-    return render_template('auth/register.html', data=data) 
+    return render_template('auth/register.html', data=data, form=form) 
     
 def logout() : 
     session.pop('id', None)
