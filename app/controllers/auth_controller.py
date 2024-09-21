@@ -54,6 +54,12 @@ def verify() :
         }
         return render_template('auth/login.html', data=data, form=form) 
     
+def register() :
+    data = {
+        'title' : 'Register'
+    }
+    return render_template('auth/register.html', data=data) 
+    
 def logout() : 
     session.pop('id', None)
     session.pop('username', None)

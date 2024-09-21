@@ -12,6 +12,10 @@ def index():
 def verify():
     return auth_controller.verify()
 
+@auth.route('/register')
+def register():
+    return auth_controller.register()
+
 @auth.route('/logout',  methods=['GET'])
 def logout():
     return auth_controller.logout()
