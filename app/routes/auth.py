@@ -16,6 +16,10 @@ def verify():
 def register():
     return auth_controller.register()
 
+@auth.route('/register',  methods=['POST'])
+def registered():
+    return auth_controller.registered()
+
 @auth.route('/logout',  methods=['GET'])
 def logout():
     return auth_controller.logout()

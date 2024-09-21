@@ -5,7 +5,7 @@
 <h1>Register Page</h1>
 
 
-<form action="" method="post">
+<form action="{{ url_for('auth.registered') }}" method="post">
     {{ form.csrf_token }}
     {{ form.username.label }} {{ form.username(size=20) }}
     {% if form.username.errors %}

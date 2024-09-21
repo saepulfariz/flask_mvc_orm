@@ -84,6 +84,16 @@ def register() :
         'title' : 'Register'
     }
     return render_template('auth/register.html', data=data, form=form) 
+
+def registered() : 
+    form = RegisterForm()
+    if form.validate_on_submit():
+        return redirect(url_for('auth.index'))
+    else: 
+        data = {
+            'title' : 'Register'
+        }
+        return render_template('auth/register.html', data=data, form=form) 
     
 def logout() : 
     session.pop('id', None)
