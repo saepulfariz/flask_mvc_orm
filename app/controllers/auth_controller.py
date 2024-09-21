@@ -1,5 +1,6 @@
 from flask import request, redirect, url_for, render_template, flash, session
 from app.models import User
+from app import db
 
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, ValidationError
@@ -88,6 +89,15 @@ def register() :
 def registered() : 
     form = RegisterForm()
     if form.validate_on_submit():
+        username = request.form['username']
+        email = request.form['email']
+        password = request.form['password']
+        role_id = 2
+        password = pbkdf2_sha256.hash(password)
+        user = User(username=username, email=email, password=password, role_id=role_id)
+        db.session.add(user)
+        db.session.commit()
+        flash('User created successfully!, please login.', 'message')
         return redirect(url_for('auth.index'))
     else: 
         data = {
