@@ -1,6 +1,8 @@
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect, CSRFError
+from flask.cli import with_appcontext
+import click
 
 from app.config.config import Config
 
@@ -60,6 +62,11 @@ migrate = Migrate() #define migration
 migrate.init_app(app,db) #initiate migration
 
 # app.register_blueprint(main, url_prefix='/')
+
+@app.cli.command("create-user")
+@click.argument("name")
+def create_user(name):
+    print('Nama : '+name)
 
 if __name__ == '__main__':
     # with app.app_context():
