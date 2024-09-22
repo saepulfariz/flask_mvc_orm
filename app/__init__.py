@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect, CSRFError
-from flask.cli import with_appcontext
+from flask.cli import with_appcontext, AppGroup
 import click
 
 from app.config.config import Config
@@ -68,20 +68,24 @@ migrate.init_app(app,db) #initiate migration
 def create_user(name):
     print('Nama : '+name)
 
-@app.cli.command('db:seed')
-@with_appcontext
-def seed():
-    # if name == 'all' : 
-    role1 = models.Role(title="Administrator")
-    role2 = models.Role(title="Member")
+@app.cli.command("db:seed")
+def seed_all():
+    """Menjalankan semua seeder"""
+    seeder_folder = os.path.join(os.path.dirname(__file__), 'seeder')
 
-    db.session.add(role1)
-    db.session.add(role2)
+    # Memuat semua file seeder
+    for filename in os.listdir(seeder_folder):
+        if filename.endswith('_seeder.py'):
+            module_name = filename[:-3]  # Menghilangkan .py dari nama file
+            module = __import__(f'app.seeder.{module_name}', fromlist=['run'])
+            
+            # Menjalankan fungsi `run` dari setiap file seeder
+            if hasattr(module, 'run'):
+                print(f"Running seeder: {module_name}")
+                module.run()
+            else:
+                print(f"Seeder {module_name} does not have a 'run' function")
 
-    # # Commit semua data ke database
-    db.session.commit()
-
-    click.echo('Database seeded successfully!')
 
 if __name__ == '__main__':
     # with app.app_context():
