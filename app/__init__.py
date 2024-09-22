@@ -68,6 +68,14 @@ migrate.init_app(app,db) #initiate migration
 def create_user(name):
     print('Nama : '+name)
 
+@app.cli.command("migrate:refresh")
+def migrate_refresh():
+    # Hapus semua data dari tabel (opsional)
+    db.drop_all()
+
+    # Buat ulang tabel-tabel (opsional)
+    db.create_all()
+
 @app.cli.command("db:seed")
 @click.argument("name", required=False)
 def seed_all(name = None):
