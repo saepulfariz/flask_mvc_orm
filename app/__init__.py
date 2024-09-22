@@ -68,6 +68,21 @@ migrate.init_app(app,db) #initiate migration
 def create_user(name):
     print('Nama : '+name)
 
+@app.cli.command('db:seed')
+@with_appcontext
+def seed():
+    # if name == 'all' : 
+    role1 = models.Role(title="Administrator")
+    role2 = models.Role(title="Member")
+
+    db.session.add(role1)
+    db.session.add(role2)
+
+    # # Commit semua data ke database
+    db.session.commit()
+
+    click.echo('Database seeded successfully!')
+
 if __name__ == '__main__':
     # with app.app_context():
     #     # Inisialisasi database atau tugas lain yang membutuhkan app context
