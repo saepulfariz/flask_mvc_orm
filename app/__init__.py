@@ -77,9 +77,12 @@ def migrate_refresh():
     db.create_all()
 
 @app.cli.command("migrate")
-def migrate_refresh():
-    # Buat ulang tabel-tabel (opsional)
+def migrate():
     db.create_all()
+
+@app.cli.command("migrate:rollback")
+def migrate_rollback():
+    db.drop_all()
 
 @app.cli.command("db:seed")
 @click.argument("name", required=False)
