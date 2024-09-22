@@ -69,7 +69,8 @@ def create_user(name):
     print('Nama : '+name)
 
 @app.cli.command("db:seed")
-def seed_all():
+@click.argument("name", required=False)
+def seed_all(name = None):
     """Menjalankan semua seeder"""
     seeder_folder = os.path.join(os.path.dirname(__file__), 'seeder')
 
@@ -79,12 +80,20 @@ def seed_all():
             module_name = filename[:-3]  # Menghilangkan .py dari nama file
             module = __import__(f'app.seeder.{module_name}', fromlist=['run'])
             
-            # Menjalankan fungsi `run` dari setiap file seeder
-            if hasattr(module, 'run'):
-                print(f"Running seeder: {module_name}")
-                module.run()
-            else:
-                print(f"Seeder {module_name} does not have a 'run' function")
+            if name is None :
+                # Menjalankan fungsi `run` dari setiap file seeder
+                if hasattr(module, 'run'):
+                    print(f"Running seeder: {module_name}")
+                    module.run()
+                else:
+                    print(f"Seeder {module_name} does not have a 'run' function")
+            elif (name == module_name) : 
+                # Menjalankan fungsi `run` dari setiap file seeder
+                if hasattr(module, 'run'):
+                    print(f"Running seeder: {module_name}")
+                    module.run()
+                else:
+                    print(f"Seeder {module_name} does not have a 'run' function")
 
 
 if __name__ == '__main__':
