@@ -71,17 +71,21 @@ def create_user(name):
 @app.cli.command("migrate:refresh")
 def migrate_refresh():
     # Hapus semua data dari tabel (opsional)
+    print(f"Migrate Rollback Success.")
     db.drop_all()
 
     # Buat ulang tabel-tabel (opsional)
+    print(f"Migrate All Success.")
     db.create_all()
 
 @app.cli.command("migrate")
 def migrate():
+    print(f"Migrate All Success.")
     db.create_all()
 
 @app.cli.command("migrate:rollback")
 def migrate_rollback():
+    print(f"Migrate Rollback Success.")
     db.drop_all()
 
 @app.cli.command("db:seed")
