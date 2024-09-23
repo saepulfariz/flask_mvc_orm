@@ -63,6 +63,29 @@ migrate.init_app(app,db) #initiate migration
 
 # app.register_blueprint(main, url_prefix='/')
 
+import importlib
+
+def register_commands(app):
+    """Fungsi untuk memuat semua file di folder 'command'"""
+    command_folder = os.path.join(os.path.dirname(__file__), 'command')
+
+    # Loop melalui semua file di folder 'command'
+    for filename in os.listdir(command_folder):
+        if filename.endswith('.py') and filename != '__init__.py':
+            module_name = filename[:-3]
+            module = importlib.import_module(f'app.command.{module_name}')
+
+            # Cari semua command di file tersebut
+            for attr in dir(module):
+                command = getattr(module, attr)
+                # Periksa apakah atribut adalah instance dari AppGroup (CLI command)
+                if isinstance(command, AppGroup):
+                    # Tambahkan command ke Flask app
+                    app.cli.add_command(command)
+
+# Panggil fungsi untuk register semua command
+register_commands(app)
+
 @app.cli.command("create-user")
 @click.argument("name")
 def create_user(name):
