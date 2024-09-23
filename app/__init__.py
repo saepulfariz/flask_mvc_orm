@@ -74,6 +74,7 @@ def register_commands(app):
         if filename.endswith('.py') and filename != '__init__.py':
             module_name = filename[:-3]
             module = importlib.import_module(f'app.command.{module_name}')
+            print(module)
 
             # Cari semua command di file tersebut
             for attr in dir(module):
@@ -82,6 +83,14 @@ def register_commands(app):
                 if isinstance(command, AppGroup):
                     # Tambahkan command ke Flask app
                     app.cli.add_command(command)
+
+            # Cari semua AppGroup di file tersebut
+            # for attr in dir(module):
+            #     command = getattr(module, attr)
+            #     # Periksa apakah itu adalah AppGroup
+            #     if hasattr(command, 'name'):
+            #         # Jika ditemukan AppGroup, tambahkan ke Flask CLI
+            #         app.cli.add_command(command)
 
 # Panggil fungsi untuk register semua command
 register_commands(app)
