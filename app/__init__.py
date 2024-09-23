@@ -74,7 +74,6 @@ def register_commands(app):
         if filename.endswith('.py') and filename != '__init__.py':
             module_name = filename[:-3]
             module = importlib.import_module(f'app.command.{module_name}')
-            print(module)
 
             # Cari semua command di file tersebut
             for attr in dir(module):
@@ -102,6 +101,7 @@ def create_user(name):
 
 @app.cli.command("migrate:refresh")
 def migrate_refresh():
+    """Running rollback dan migrate database"""
     # Hapus semua data dari tabel (opsional)
     print(f"Migrate Rollback Success.")
     db.drop_all()
@@ -112,18 +112,20 @@ def migrate_refresh():
 
 @app.cli.command("migrate")
 def migrate():
+    """Running migrate database"""
     print(f"Migrate All Success.")
     db.create_all()
 
 @app.cli.command("migrate:rollback")
 def migrate_rollback():
+    """Running rollback database"""
     print(f"Migrate Rollback Success.")
     db.drop_all()
 
 @app.cli.command("db:seed")
 @click.argument("name", required=False)
 def seed_all(name = None):
-    """Menjalankan semua seeder"""
+    """Running all seeder / (flask db:seed name_seeder)"""
     seeder_folder = os.path.join(os.path.dirname(__file__), 'seeder')
 
     # Memuat semua file seeder
@@ -133,14 +135,14 @@ def seed_all(name = None):
             module = __import__(f'app.seeder.{module_name}', fromlist=['run'])
             
             if name is None :
-                # Menjalankan fungsi `run` dari setiap file seeder
+                # Running fungsi `run` dari setiap file seeder
                 if hasattr(module, 'run'):
                     print(f"Running seeder: {module_name}")
                     module.run()
                 else:
                     print(f"Seeder {module_name} does not have a 'run' function")
             elif (name == module_name) : 
-                # Menjalankan fungsi `run` dari setiap file seeder
+                # Running fungsi `run` dari setiap file seeder
                 if hasattr(module, 'run'):
                     print(f"Running seeder: {module_name}")
                     module.run()
