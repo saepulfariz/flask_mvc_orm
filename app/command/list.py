@@ -1,4 +1,5 @@
 from flask.cli import AppGroup
+import click
 from flask import current_app as app
 
 from colorama import Fore, Back, Style
@@ -16,3 +17,10 @@ def list_command():
     print(Style.DIM + 'and in dim text')
     print(Style.RESET_ALL)
     print('back to normal now')
+
+@list_cli.command('data')
+@click.argument("name", required=False)
+def data(name = None):
+    """Menampilkan data"""
+    name = "None" if (name is None) else name
+    print('data '+ name)
