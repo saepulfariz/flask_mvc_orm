@@ -7,9 +7,14 @@ from colorama import Fore, Back, Style
 # Membuat AppGroup untuk perintah 'list'
 list_cli = AppGroup('list',short_help="List Command (flask list app)")
 
+@list_cli.command('default')
+def list_default():
+    """Menampilkan default command"""
+    print('Default command list')
+
 @list_cli.command('app')
 # @app.cli.command('list')
-def list_command():
+def list_app():
     # kalau single nampil, kalau pake AppGroup Pake short_help
     """Menampilkan list command"""
     print(Fore.RED + 'some red text')
@@ -20,7 +25,7 @@ def list_command():
 
 @list_cli.command('data')
 @click.argument("name", required=False)
-def data(name = None):
+def list_data(name = None):
     """Menampilkan data"""
     name = "None" if (name is None) else name
     print('data '+ name)
