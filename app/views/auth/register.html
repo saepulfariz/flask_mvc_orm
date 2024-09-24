@@ -7,6 +7,13 @@
 
 <form action="{{ url_for('auth.registered') }}" method="post">
     {{ form.csrf_token }}
+    {{ form.name.label }} {{ form.name(size=20) }}
+    {% if form.name.errors %}
+    <span style="color: red;">{{ form.name.errors[0] }}</span>
+    {% endif %}
+
+    <br>
+
     {{ form.username.label }} {{ form.username(size=20) }}
     {% if form.username.errors %}
     <span style="color: red;">{{ form.username.errors[0] }}</span>

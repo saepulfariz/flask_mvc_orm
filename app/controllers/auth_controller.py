@@ -17,6 +17,9 @@ class LoginFrom(FlaskForm):
     submit = SubmitField('Submit', render_kw={"class": "btn btn-primary"})
 
 class RegisterForm(FlaskForm):
+    name = StringField('Name', 
+                        validators=[DataRequired()], 
+                        render_kw={"class": "form-control", "placeholder": "Enter your name"})
     username = StringField('Username', 
                            validators=[DataRequired(message="Username tidak boleh kosong."), Length(min=3, max=50,message="Username harus antara 3 sampai 50 karakter.")], 
                            render_kw={"class": "form-control", "placeholder": "Enter your username/Email"})
@@ -90,12 +93,13 @@ def register() :
 def registered() : 
     form = RegisterForm()
     if form.validate_on_submit():
+        name = request.form['name']
         username = request.form['username']
         email = request.form['email']
         password = request.form['password']
         role_id = 2
         password = pbkdf2_sha256.hash(password)
-        user = User(username=username, email=email, password=password, role_id=role_id)
+        user = User(name=name,username=username, email=email, password=password, role_id=role_id)
         db.session.add(user)
         db.session.commit()
         flash('User created successfully!, please login.', 'message')
