@@ -125,6 +125,7 @@ def update(id):
     form = UserForm(original_username=user.username, original_email=user.email, is_edit=True)
     # print(request.method)
     if form.validate_on_submit():
+        user.name = request.form['name']
         user.username = request.form['username']
         user.email = request.form['email']
         user.role_id = request.form['role_id']
