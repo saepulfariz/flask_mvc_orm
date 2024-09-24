@@ -9,6 +9,9 @@ from wtforms.validators import DataRequired, Length, Email
 from passlib.hash import pbkdf2_sha256
 
 class UserForm(FlaskForm):
+    name = StringField('Name', 
+                        validators=[DataRequired()], 
+                        render_kw={"class": "form-control", "placeholder": "Enter your name"})
     username = StringField('Username', 
                            validators=[DataRequired(message="Username tidak boleh kosong."), Length(min=3, max=50,message="Username harus antara 3 sampai 50 karakter.")], 
                            render_kw={"class": "form-control", "placeholder": "Enter your username"})
@@ -91,12 +94,13 @@ def create():
     form = UserForm()
     if request.method == 'POST':
         if form.validate_on_submit():
+            name = request.form['name']
             username = request.form['username']
             email = request.form['email']
             role_id = request.form['role_id']
             password = request.form['password']
             password = pbkdf2_sha256.hash(password)
-            user = User(username=username, email=email, password=password, role_id=role_id)
+            user = User(name=name,username=username, email=email, password=password, role_id=role_id)
             db.session.add(user)
             db.session.commit()
             flash('User created successfully!', 'message')
