@@ -1,4 +1,4 @@
-from flask.cli import AppGroup
+from flask.cli import AppGroup, with_appcontext
 import click
 from flask import current_app as app
 
@@ -7,7 +7,7 @@ from colorama import Fore, Back, Style
 # Membuat AppGroup untuk perintah 'list'
 list_cli = AppGroup('list',short_help="List Command (flask list app)")
 
-@list_cli.command('default')
+@list_cli.command('default', with_appcontext=True)
 def list_default():
     """Menampilkan default command"""
     print('Default command list')

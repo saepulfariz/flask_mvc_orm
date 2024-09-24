@@ -19,3 +19,15 @@ flask db upgrade
 flask db merge
 
 flask run
+
+Latest documentation has the following example assuming you want to run hello.py(using .py file extension is optional):
+
+Unix, Linux, macOS, etc.:
+
+$ export FLASK_APP=hello
+$ flask run
+
+Windows:
+
+> set FLASK_APP=hello
+> flask run
