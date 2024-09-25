@@ -145,3 +145,10 @@ def delete(id):
     db.session.commit()
     flash('User deleted successfully!', 'message')
     return redirect(url_for('users.index'))
+
+def change_password():
+    data = {
+        'title' : 'Change Password',
+    }
+
+    return render_template('users/change_password.html', data=data)
