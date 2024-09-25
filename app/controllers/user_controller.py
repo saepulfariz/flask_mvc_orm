@@ -1,4 +1,4 @@
-from flask import request, redirect, url_for, render_template, flash
+from flask import request, redirect, url_for, render_template, flash, session
 from app.models import User, Student, PcsModel, Role
 from app import db
 
@@ -78,6 +78,19 @@ class ChangePasswordFrom(FlaskForm):
                         render_kw={"class": "form-control", "placeholder": "Confirm your password"})
     
     submit = SubmitField('Submit', render_kw={"class": "btn btn-primary"})
+
+    def validate_old_password(self, field):
+        old_password = field.data
+        username = session['username']
+        data = User.query.filter(
+            (User.username ==username) | (User.email== username)
+        ).first()
+        if data:
+            hash = data.password
+            if ((pbkdf2_sha256.verify(old_password, hash)) == False) :
+                raise ValidationError('Password wrong')
+        else: 
+            raise ValidationError('User not found')
 
 def index():
     form = FlaskForm()
