@@ -76,6 +76,8 @@ class ChangePasswordFrom(FlaskForm):
     confirm_password = PasswordField('Confirm Password',
                                      validators=[EqualTo(fieldname="password", message="Password harus sama"), Length(min=3,message="Password min 3")],
                         render_kw={"class": "form-control", "placeholder": "Confirm your password"})
+    
+    submit = SubmitField('Submit', render_kw={"class": "btn btn-primary"})
 
 def index():
     form = FlaskForm()
