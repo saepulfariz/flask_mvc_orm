@@ -166,3 +166,14 @@ def change_password():
     }
 
     return render_template('users/change_password.html', data=data, form=form)
+
+def update_password():
+    form = ChangePasswordFrom()
+    if form.validate_on_submit():
+        return 'okok'
+    else :
+        data = {
+            'title' : 'Change Password',
+        }
+
+        return render_template('users/change_password.html', data=data, form=form)
