@@ -183,7 +183,13 @@ def change_password():
 def update_password():
     form = ChangePasswordFrom()
     if form.validate_on_submit():
-        return 'okok'
+        id  = session['id']
+        user = User.query.get_or_404(id)
+        password  = request.form['password']
+        user.password = pbkdf2_sha256.hash(password)
+        db.session.commit()
+        flash('User change password successfully!', 'message')
+        return redirect(url_for('users.index'))
     else :
         data = {
             'title' : 'Change Password',
