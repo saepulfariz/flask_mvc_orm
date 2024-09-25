@@ -4,7 +4,7 @@ from app import db
 
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, ValidationError, PasswordField, SelectField
-from wtforms.validators import DataRequired, Length, Email
+from wtforms.validators import DataRequired, Length, Email, EqualTo
 
 from passlib.hash import pbkdf2_sha256
 
@@ -65,6 +65,17 @@ class UserForm(FlaskForm):
         role = Role.query.get(field.data)
         if not role:
             raise ValidationError('Role tidak valid. Silakan pilih role yang benar.')
+        
+class ChangePasswordFrom(FlaskForm):
+    old_password = PasswordField('Old Password',
+                             validators=[ Length(min=3,message="Password min 3")],
+                        render_kw={"class": "form-control", "placeholder": "Enter your password"})
+    password = PasswordField('New Password',
+                             validators=[ Length(min=3,message="Password min 3")],
+                        render_kw={"class": "form-control", "placeholder": "Enter your password"})
+    confirm_password = PasswordField('Confirm Password',
+                                     validators=[EqualTo(fieldname="password", message="Password harus sama"), Length(min=3,message="Password min 3")],
+                        render_kw={"class": "form-control", "placeholder": "Confirm your password"})
 
 def index():
     form = FlaskForm()
@@ -147,8 +158,9 @@ def delete(id):
     return redirect(url_for('users.index'))
 
 def change_password():
+    form = ChangePasswordFrom()
     data = {
         'title' : 'Change Password',
     }
 
-    return render_template('users/change_password.html', data=data)
+    return render_template('users/change_password.html', data=data, form=form)
