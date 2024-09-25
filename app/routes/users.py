@@ -33,9 +33,11 @@ def delete(id):
     return user_controller.delete(id)
 
 @users.route('/change-password', methods=['GET'])
+@login_required
 def change_password():
     return user_controller.change_password()
 
 @users.route('/change-password', methods=['PUT'])
+@login_required
 def update_password():
     return user_controller.update_password()
