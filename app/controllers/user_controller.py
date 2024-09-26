@@ -93,6 +93,8 @@ class ChangePasswordFrom(FlaskForm):
                 raise ValidationError('Password wrong')
         else: 
             raise ValidationError('User not found')
+        
+path_upload = "static/uploads/users"
 
 def index():
     form = FlaskForm()
@@ -129,7 +131,7 @@ def create():
             if image_file:
             # Amankan nama file dan simpan di direktori tertentu
                 image_filename = secure_filename(image_file.filename)
-                image_file.save(os.path.join('static/uploads/users', image_filename))
+                image_file.save(os.path.join(path_upload, image_filename))
             else:
                 # Jika tidak ada gambar yang diunggah, gunakan default 'user.png'
                 image_filename = 'user.png'
@@ -165,6 +167,21 @@ def update(id):
     form = UserForm(original_username=user.username, original_email=user.email, is_edit=True)
     # print(request.method)
     if form.validate_on_submit():
+        # Mengambil file gambar dari form, jika ada
+        image_file = request.files['image'] if 'image' in request.files else None
+
+        if image_file:
+            # Amankan nama file dan simpan di direktori tertentu
+            image_filename = secure_filename(image_file.filename)
+            image_file.save(os.path.join(path_upload, image_filename))
+
+            if user.image != 'user.png' : 
+                os.unlink(path_upload + '/' + user.image)
+        else:
+            # Jika tidak ada gambar yang diunggah, gunakan default 'user.png'
+            image_filename = 'user.png'
+
+        user.image = image_filename
         user.name = request.form['name']
         user.username = request.form['username']
         user.email = request.form['email']
