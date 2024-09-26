@@ -198,6 +198,8 @@ def update(id):
     
 def delete(id):
     user = User.query.get_or_404(id)
+    if user.image != 'user.png' : 
+        os.unlink(path_upload + '/' + user.image)
     db.session.delete(user)
     db.session.commit()
     flash('User deleted successfully!', 'message')
