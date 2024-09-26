@@ -6,6 +6,7 @@ class User(BaseModel):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), unique=True, nullable=False)
     username = db.Column(db.String(50), unique=True, nullable=False)
+    image = db.Column(db.String(100), default='user.png') 
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(256), nullable=False)
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id', onupdate='CASCADE', ondelete='SET NULL'), nullable=True)
