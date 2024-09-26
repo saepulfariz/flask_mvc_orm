@@ -4,3 +4,4 @@ migrations
 __pycache__
 instance/app.db
 instance/*
+static/uploads/users
