@@ -1,6 +1,8 @@
 from flask import request, redirect, url_for, render_template, flash, session
 from app.models import User, Student, PcsModel, Role
 from app import db
+from werkzeug.utils import secure_filename
+import os
 
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, ValidationError, PasswordField, SelectField
@@ -120,13 +122,25 @@ def create():
     form = UserForm()
     if request.method == 'POST':
         if form.validate_on_submit():
+
+            # Mengambil file gambar dari form, jika ada
+            image_file = request.files['image'] if 'image' in request.files else None
+
+            if image_file:
+            # Amankan nama file dan simpan di direktori tertentu
+                image_filename = secure_filename(image_file.filename)
+                image_file.save(os.path.join('static/uploads/users', image_filename))
+            else:
+                # Jika tidak ada gambar yang diunggah, gunakan default 'user.png'
+                image_filename = 'user.png'
+
             name = request.form['name']
             username = request.form['username']
             email = request.form['email']
             role_id = request.form['role_id']
             password = request.form['password']
             password = pbkdf2_sha256.hash(password)
-            user = User(name=name,username=username, email=email, password=password, role_id=role_id)
+            user = User(name=name,username=username, email=email, password=password, role_id=role_id, image=image_filename)
             db.session.add(user)
             db.session.commit()
             flash('User created successfully!', 'message')
