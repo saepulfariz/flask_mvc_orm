@@ -50,7 +50,14 @@ def handle_csrf_error(e):
         'title' : 'Token is required'
     }
     return render_template('errors/csrf.html', reason=e.description, data=data), 400
-
+    
+@app.errorhandler(404)
+def not_found(e):
+    data = {
+        'title' : 'Not Found'
+    }
+    return render_template("errors/404.html", data=data)
+   
 app_host = os.getenv('FLASK_RUN_HOST')
 app_port = os.getenv('FLASK_RUN_PORT')
 app_debug = os.getenv('FLASK_DEBUG')
