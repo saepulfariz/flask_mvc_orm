@@ -30,8 +30,11 @@
 
     <img src="{{ url_for('static', filename = 'uploads/users/'+ data.data.image) }}" alt="">
     <br>
-    <label for="image">Image</label>
-    <input type="file" id="image" name="image" accept="image/*">
+    {{ form.image.label }}<br>
+    {{ form.image() }}<br>
+    {% for error in form.image.errors %}
+    <span style="color: red;">{{ error }}</span>
+    {% endfor %}
     <br>
 
 
