@@ -218,7 +218,14 @@ def update(id):
         flash('User updated successfully!', 'message')
         return redirect(url_for('users.index'))
     else:
-        data = User.query.get_or_404(id)
+        result = User.query.get_or_404(id)
+        data = {
+            'title' : 'Edit user',
+            'data' : result,
+            'roles' : Role.query.all()
+        }
+        form.role_id.choices = [(role.id, role.title) for role in data['roles']]
+        form.role_id.data = result.role_id  # Pre-select pilihan dropdown
         return render_template('users/edit.html', data=data, form=form)
         
     
