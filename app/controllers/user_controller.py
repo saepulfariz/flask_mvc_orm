@@ -153,7 +153,13 @@ def create():
             flash('User created successfully!', 'message')
             return redirect(url_for('users.index'))
         else:
-            return render_template('users/new.html', form=form)
+            data = {
+                'title' : 'New user',
+                'roles' : Role.query.all()
+            }
+
+            form.role_id.choices = [(role.id, role.title) for role in data['roles']]
+            return render_template('users/new.html', data=data,form=form)
     
 def edit(id):
     result = User.query.get_or_404(id)
