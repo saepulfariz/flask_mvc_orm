@@ -5,6 +5,7 @@ from werkzeug.utils import secure_filename
 import os
 
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileAllowed, FileRequired
 from wtforms import StringField, SubmitField, ValidationError, PasswordField, SelectField
 from wtforms.validators import DataRequired, Length, Email, EqualTo
 
@@ -22,6 +23,10 @@ class UserForm(FlaskForm):
                         render_kw={"class": "form-control", "placeholder": "Enter your email"})
     password = PasswordField('Password',
                         render_kw={"class": "form-control", "placeholder": "Enter your password"})
+    
+    image = FileField('Profile Image', validators=[
+        FileAllowed(['jpg', 'png', 'jpeg'], 'Images only!')  # Validasi hanya gambar
+    ])
     
     role_id = SelectField('Pilih Role', choices=[], coerce=int, validate_choice=False, validators=[DataRequired()])
     submit = SubmitField('Submit', render_kw={"class": "btn btn-primary"})
