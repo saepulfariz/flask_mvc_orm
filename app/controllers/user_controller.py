@@ -11,6 +11,20 @@ from wtforms.validators import DataRequired, Length, Email, EqualTo
 
 from passlib.hash import pbkdf2_sha256
 
+def file_size_limit(max_size):
+    """Custom validator untuk membatasi ukuran file."""
+    def _file_size_limit(form, field):
+        # Mengambil file yang diunggah
+        file = field.data
+        if file:
+            # Periksa apakah ukuran file melebihi batas
+            file_size = len(file.read())
+            if file_size > max_size:
+                raise ValidationError(f'File size must be less than {max_size / 1024 / 1024:.1f} MB')
+            # Reset pointer file ke awal
+            file.seek(0)
+    return _file_size_limit
+
 class UserForm(FlaskForm):
     name = StringField('Name', 
                         validators=[DataRequired()], 
@@ -25,7 +39,8 @@ class UserForm(FlaskForm):
                         render_kw={"class": "form-control", "placeholder": "Enter your password"})
     
     image = FileField('Profile Image', validators=[
-        FileAllowed(['jpg', 'png', 'jpeg'], 'Images only!')  # Validasi hanya gambar
+        FileAllowed(['jpg', 'png', 'jpeg'], 'Images only!'),  # Validasi hanya gambar
+        file_size_limit(1 * 1024 * 1024)  # Batas ukuran file 1MB
     ])
     
     role_id = SelectField('Pilih Role', choices=[], coerce=int, validate_choice=False, validators=[DataRequired()])
