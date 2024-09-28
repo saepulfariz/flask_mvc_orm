@@ -31,3 +31,6 @@ Windows:
 
 > set FLASK_APP=hello
 > flask run
+
+
+flask run --host=192.168.56.101
