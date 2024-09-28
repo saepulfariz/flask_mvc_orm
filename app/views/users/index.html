@@ -1,31 +1,55 @@
 {% extends 'template/index.html' %}
 
 {% block content %}
-<h1>Users</h1>
-<a href="{{ url_for('users.new') }}">Create User</a>
-<ul>
-    {% for d in data.data %}
-    <!-- {{ d.username|e }} -->
-    <!-- {{ d.username|safe }} -->
-    <li>{{ d.name }} - {{ d.username }} - {{ d.roles.title }} - {{ d.email }} - {{ d.products }}
-        <a href="{{ url_for('users.edit', id=d.id) }}">Edit</a>
-        <form action="{{ url_for('users.delete', id=d.id) }}" method="post" style="display:inline;">
-            <input type="hidden" name="_method" value="DELETE" />
-            {{ form.csrf_token }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-    {% endfor %}
-</ul>
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-md-7">
+            <h1>Users</h1>
+            <a class="btn btn-sm btn-primary" href="{{ url_for('users.new') }}">Create User</a>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Username</th>
+                        <th>Role</th>
+                        <th>Email</th>
+                        <th>Products</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for d in data.data %}
+                    <!-- {{ d.username|e }} -->
+                    <!-- {{ d.username|safe }} -->
+                    <tr>
+                        <td>{{ d.name }}</td>
+                        <td>{{ d.username }}</td>
+                        <td>{{ d.roles.title }}</td>
+                        <td>{{ d.email }}</td>
+                        <td>{{ d.products }}</td>
+                        <td>
+                            <a class="btn btn-sm btn-warning" href="{{ url_for('users.edit', id=d.id) }}">Edit</a>
+                            <form action="{{ url_for('users.delete', id=d.id) }}" method="post" style="display:inline;">
+                                <input type="hidden" name="_method" value="DELETE" />
+                                {{ form.csrf_token }}
+                                <button class="btn btn-sm btn-danger" type="submit">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
 
-<h1>Data Student</h1>
-<ul>
-    {% for d in students %}
-    <li>{{ d.name }}
-    </li>
-    {% endfor %}
-</ul>
+            <h1>Data Student</h1>
+            <ul>
+                {% for d in students %}
+                <li>{{ d.name }}
+                </li>
+                {% endfor %}
+            </ul>
 
-
+        </div>
+    </div>
+</div>
 
 {% endblock %}
