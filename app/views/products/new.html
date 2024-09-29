@@ -1,32 +1,38 @@
 {% extends 'template/index.html' %}
 
 {% block content %}
-<h1>Create Product</h1>
-<form action="{{ url_for('products.create') }}" method="post">
-    {{ form.csrf_token }}
-    {{ form.name.label }} {{ form.name() }}
-    {% if form.name.errors %}
-    <span style="color: red;">{{ form.name.errors[0] }}</span>
-    {% endif %}
-    <br>
-    {{ form.price.label }} {{ form.price() }}
-    {% if form.price.errors %}
-    <span style="color: red;">{{ form.price.errors[0] }}</span>
-    {% endif %}
-    <br>
-    {{ form.stock.label }} {{ form.stock() }}
-    {% if form.stock.errors %}
-    <span style="color: red;">{{ form.stock.errors[0] }}</span>
-    {% endif %}
-    <br>
-    {{ form.user_id.label }}
-    {{ form.user_id(class_="form-control") }}
-    {% if form.user_id.errors %}
-    <span style="color: red;">{{ form.user_id.errors[0] }}</span>
-    {% endif %}
-    <br>
-    {{ form.submit() }}
-    <a href="{{ url_for('products.index') }}">Back</a>
-</form>
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-md-7">
+            <h1>Create Product</h1>
+            <form action="{{ url_for('products.create') }}" method="post">
+                {{ form.csrf_token }}
+                {{ form.name.label }} {{ form.name() }}
+                {% if form.name.errors %}
+                <span style="color: red;">{{ form.name.errors[0] }}</span>
+                {% endif %}
+                <br>
+                {{ form.price.label }} {{ form.price() }}
+                {% if form.price.errors %}
+                <span style="color: red;">{{ form.price.errors[0] }}</span>
+                {% endif %}
+                <br>
+                {{ form.stock.label }} {{ form.stock() }}
+                {% if form.stock.errors %}
+                <span style="color: red;">{{ form.stock.errors[0] }}</span>
+                {% endif %}
+                <br>
+                {{ form.user_id.label }}
+                {{ form.user_id(class_="form-control") }}
+                {% if form.user_id.errors %}
+                <span style="color: red;">{{ form.user_id.errors[0] }}</span>
+                {% endif %}
+                <br>
+                {{ form.submit() }}
+                <a class="btn btn-secondary" href="{{ url_for('products.index') }}">Back</a>
+            </form>
 
+        </div>
+    </div>
+</div>
 {% endblock %}
