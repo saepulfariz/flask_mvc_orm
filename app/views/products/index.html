@@ -1,20 +1,44 @@
 {% extends 'template/index.html' %}
 
 {% block content %}
-<h1>Products</h1>
-<a href="{{ url_for('products.new') }}">Create Product</a>
-<ul>
-    {% for d in data.data %}
-    <li>{{ d.name }} - ${{ d.price }} (Stock: {{ d.stock }}) (User: {{ d.user.username }})
-        <a href="{{ url_for('products.edit', id=d.id) }}">Edit</a>
-        <form action="{{ url_for('products.delete', id=d.id) }}" method="post" style="display:inline;">
-            <input type="hidden" name="_method" value="DELETE" />
-            {{ form.csrf_token }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-    {% endfor %}
-</ul>
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-md-7">
+            <h1>Products</h1>
+            <a class="btn btn-sm btn-primary" href="{{ url_for('products.new') }}">Create Product</a>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td>Name</td>
+                        <td>Price</td>
+                        <td>Stock</td>
+                        <td>User</td>
+                        <td>Action</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for d in data.data %}
+                    <tr>
+                        <td>{{ d.name }}</td>
+                        <td>{{ d.price }}</td>
+                        <td>{{ d.stock }}</td>
+                        <td>{{ d.user.username }}</td>
+                        <td>
+                            <a class="btn btn-sm btn-warning" href="{{ url_for('products.edit', id=d.id) }}">Edit</a>
+                            <form action="{{ url_for('products.delete', id=d.id) }}" method="post"
+                                style="display:inline;">
+                                <input type="hidden" name="_method" value="DELETE" />
+                                {{ form.csrf_token }}
+                                <button class="btn btn-sm btn-danger" type="submit">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
 
 
