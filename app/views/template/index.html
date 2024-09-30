@@ -1,34 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+{% include "template/header.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ ( data.title) }} | FLASK</title>
-    <link href="{{ url_for('static', filename = 'css/style.css') }}" rel="stylesheet">
-	<link href="{{ url_for('static', filename = 'assets/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" >
-    {% block head %} {% endblock %}
-</head>
+{% block content %} {% endblock %}
 
-<body class="">
-
-
-    <!-- { % include "template/topbar.html" % } -->
-    {% block content %} {% endblock %}
-
-
-    {% with messages = get_flashed_messages(category_filter=["message"]) %}
-    {% if messages %}
-    <script>
-        alert('{{ messages[0] }}')
-    </script>
-    {% endif %}
-    {% endwith %}
-	
-	<script src="{{ url_for('static', filename = 'assets/bootstrap/js/bootstrap.bundle.min.js') }}" ></script>
-
-    {% block script %} {% endblock %}
-
-</body>
-
-</html>
+{% include "template/footer.html" %}
