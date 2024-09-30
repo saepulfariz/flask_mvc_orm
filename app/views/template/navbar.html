@@ -19,7 +19,8 @@
                     {% endif %}
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link mx-2" href="{{ url_for('products.index') }}">Products</a>
+                    <a class="nav-link mx-2 {{ 'active' if request.path.split('/')[1] == 'products' else '' }}"
+                        href="{{ url_for('products.index') }}">Products</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link mx-2 dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
