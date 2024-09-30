@@ -117,7 +117,7 @@ class ChangePasswordFrom(FlaskForm):
 path_upload = "static/uploads/users"
 
 def index():
-    print(request.path)
+    # print(request.path)
     form = FlaskForm()
     data = User.query.all()
     print(Student.query.all())
@@ -133,7 +133,7 @@ def index():
 
 def new():
     # /users/new
-    print(request.path)
+    # print(request.path)
     form = UserForm()
     data = {
         'title' : 'New user',
