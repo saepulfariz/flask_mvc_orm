@@ -6,12 +6,6 @@
         <div class="col-md-7">
 
             <h1>Login Page</h1>
-            {% if session['username'] %}
-            {{ session['username'] }} | <a href="{{ url_for('auth.logout') }}"
-                class="btn btn-sm btn-danger ms-2">logout</a>
-            <hr>
-            {% else %}
-            {% endif %}
 
 
             <form action="{{ url_for('auth.verify') }}" method="post">
