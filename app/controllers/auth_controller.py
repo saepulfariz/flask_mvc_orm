@@ -69,7 +69,7 @@ def verify() :
                 session['username'] = username
                 session['role_id'] = data.role_id
                 flash('User valid', 'message')
-                return redirect(url_for('auth.index'))
+                return redirect(url_for('dashboard.index'))
             else:
                 flash('Password wrong', 'message')
                 return redirect(url_for('auth.index'))
