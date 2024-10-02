@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect, CSRFError
 from flask.cli import with_appcontext, AppGroup
 import click
-from app.helpers.custom_helper import greet_user
+from app.helpers.custom_helper import greet_user, hello_user
 
 from app.config.config import Config
 
@@ -30,6 +30,13 @@ app.wsgi_app = MethodSpooferMiddleware(app.wsgi_app)
 app.config.from_object(Config)
     
 db.init_app(app)
+
+# Register helper function as context processor
+@app.context_processor
+def inject_helpers():
+    return dict(hello_user=hello_user)
+
+app.jinja_env.filters['greet_user'] = greet_user
 
 
 with app.app_context():
@@ -131,7 +138,7 @@ def migrate_rollback():
     print(f"Migrate Rollback Success.")
     db.drop_all()
 
-app.jinja_env.filters['greet_user'] = greet_user
+
 
 @app.cli.command("db:seed")
 @click.argument("name", required=False)

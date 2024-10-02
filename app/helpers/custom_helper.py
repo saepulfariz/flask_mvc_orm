@@ -9,6 +9,10 @@ def greet_user(name = 'saepul'):
     """Helper function untuk menyapa user."""
     return f'Hello, {name}!'
 
+def hello_user(name = 'saepul'):
+    """Helper function untuk menyapa user."""
+    return f'Hello, {name}!'
+
 
 def setAlert(icon = 'success', title = 'Success', text = 'Test') :
     # session['iconFlash'] = icon
