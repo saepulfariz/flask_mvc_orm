@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect, CSRFError
 from flask.cli import with_appcontext, AppGroup
 import click
+from app.helpers.custom_helper import greet_user
 
 from app.config.config import Config
 
@@ -129,6 +130,8 @@ def migrate_rollback():
     """Running rollback database"""
     print(f"Migrate Rollback Success.")
     db.drop_all()
+
+app.jinja_env.filters['greet_user'] = greet_user
 
 @app.cli.command("db:seed")
 @click.argument("name", required=False)
