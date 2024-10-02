@@ -4,6 +4,8 @@ from flask_wtf.csrf import CSRFProtect, CSRFError
 from flask.cli import with_appcontext, AppGroup
 import click
 from app.helpers.custom_helper import greet_user, hello_user
+import importlib
+import inspect
 
 from app.config.config import Config
 
@@ -32,11 +34,39 @@ app.config.from_object(Config)
 db.init_app(app)
 
 # Register helper function as context processor
-@app.context_processor
-def inject_helpers():
-    return dict(hello_user=hello_user)
+# @app.context_processor
+# def inject_helpers():
+#     return dict(hello_user=hello_user)
 
-app.jinja_env.filters['greet_user'] = greet_user
+# app.jinja_env.filters['greet_user'] = greet_user
+
+def register_helpers():
+    """Automatically load and register all helper functions from the helpers folder."""
+    helper_functions = {}
+
+    # Dapatkan path folder helpers
+    helpers_folder = os.path.join(os.path.dirname(__file__), 'helpers')
+    print(helpers_folder)
+
+    # Loop melalui setiap file di folder helpers
+    for filename in os.listdir(helpers_folder):
+        if filename.endswith('.py') and not filename.startswith('__'):
+            # Import modul helper secara dinamis
+            module_name = f"app.helpers.{filename[:-3]}"  # remove '.py'
+            module = importlib.import_module(module_name)
+
+            # Dapatkan semua fungsi di dalam file helper
+            for name, func in inspect.getmembers(module, inspect.isfunction):
+                # Tambahkan fungsi ke dictionary helper_functions
+                helper_functions[name] = func
+
+    # Register semua fungsi sebagai context processor
+    @app.context_processor
+    def inject_helpers():
+        return helper_functions
+    
+# Panggil fungsi register_helpers di inisialisasi aplikasi Flask
+register_helpers()
 
 
 with app.app_context():
