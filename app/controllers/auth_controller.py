@@ -69,10 +69,12 @@ def verify() :
                 session['id'] = data.id
                 session['username'] = username
                 session['role_id'] = data.role_id
-                flash('User valid', 'message')
+                # flash('User valid', 'message')
+                setAlert('success', 'Success', 'User login')
                 return redirect(url_for('dashboard.index'))
             else:
-                flash('Password wrong', 'message')
+                # flash('Password wrong', 'message')
+                setAlert('warning', 'Warning', 'Password wrong')
                 return redirect(url_for('auth.index'))
                                  
         else: 
@@ -104,7 +106,8 @@ def registered() :
         user = User(name=name,username=username, email=email, password=password, role_id=role_id)
         db.session.add(user)
         db.session.commit()
-        flash('User created successfully!, please login.', 'message')
+        # flash('User created successfully!, please login.', 'message')
+        setAlert('success', 'Success', 'User created successfully!, please login.')
         return redirect(url_for('auth.index'))
     else: 
         data = {
