@@ -13,8 +13,12 @@ class User(BaseModel):
     
     # Relationship: One user can have many products
     # products = db.relationship('Product', backref='owner', lazy=True)
-    products = db.relationship('Product', backref='User', lazy=True)
-    roles = db.relationship('Role', backref='User', lazy=True)
+
+    # products = db.relationship('Product', backref='User', lazy=True)
+    # roles = db.relationship('Role', backref='User', lazy=True)
+    
+    roles = db.relationship('Role', backref=db.backref('User', lazy=True))
+    products = db.relationship('Product', backref=db.backref('User', lazy=True))
 
     def __repr__(self):
         return f'<User {self.username}>'

@@ -46,7 +46,6 @@ def register_helpers():
 
     # Dapatkan path folder helpers
     helpers_folder = os.path.join(os.path.dirname(__file__), 'helpers')
-    print(helpers_folder)
 
     # Loop melalui setiap file di folder helpers
     for filename in os.listdir(helpers_folder):
