@@ -1,5 +1,5 @@
 import datetime
-from flask import render_template, redirect, url_for, request, abort, session, flash
+from flask import render_template, redirect, url_for, request, abort, session, flash, get_flashed_messages
 
 def format_date(date):
     """Helper function untuk memformat tanggal ke format DD-MM-YYYY."""
@@ -14,19 +14,34 @@ def hello_user(name = 'saepul'):
     return f'Hello, {name}!'
 
 
-def setAlert(icon = 'success', title = 'Success', text = 'Test') :
-    # session['iconFlash'] = icon
-    # session['titleFlash'] = title
-    # session['textFlash'] = text
+def setAlert(icon = 'success', title = 'Success', text = 'Test', type = 'sweetalert') :
+    # session['icon'] = icon
+    # session['title'] = title
+    # session['text'] = text
     flash(icon, 'icon')
     flash(title, 'title')
     flash(text, 'text')
+    flash(type, 'type')
+    # flash(url, 'url')
 
 def initAlert():
-    icon = session['iconFlash'] if 'iconFlash' in session else ''
-    title = session['titleFlash'] if 'titleFlash' in session else ''
-    text = session['textFlash'] if 'textFlash' in session else ''
-    load = '<div id="flash" data-icon="' + icon + '" data-title="' + title + '" data-text="' + text + '" data-url=""></div> '
+    icon = session['icon'] if 'icon' in session else ''
+    title = session['title'] if 'title' in session else ''
+    text = session['text'] if 'text' in session else ''
+
+    icon = get_flashed_messages(category_filter=["icon"])
+    title = get_flashed_messages(category_filter=["title"])
+    text = get_flashed_messages(category_filter=["text"])
+    type = get_flashed_messages(category_filter=["type"])
+    url = get_flashed_messages(category_filter=["url"])
+
+    icon = icon[0] if icon else ''
+    title = title[0] if title else ''
+    text = text[0] if text else ''
+    type = type[0] if type else ''
+    url = url[0] if url else ''
+
+    load = '<div id="flash" data-icon="' + icon + '" data-title="' + title + '" data-text="' + text + '" data-type="' + type + '"  ></div> '
 
     load = load + """ <script>
 

@@ -1,6 +1,7 @@
 from flask import request, redirect, url_for, render_template, flash, session
 from app.models import User
 from app import db
+from app.helpers.custom_helper import setAlert
 
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, ValidationError
@@ -75,7 +76,8 @@ def verify() :
                 return redirect(url_for('auth.index'))
                                  
         else: 
-            flash('User not found', 'message')
+            # flash('User not found', 'message')
+            setAlert('warning', 'Warning', 'User not found')
             return redirect(url_for('auth.index'))
     else:
         data = {
