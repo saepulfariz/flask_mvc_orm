@@ -3,6 +3,7 @@ from app.models import User, Student, PcsModel, Role
 from app import db
 from werkzeug.utils import secure_filename
 import os
+from app.helpers.custom_helper import setAlert
 
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed, FileRequired
@@ -168,7 +169,8 @@ def create():
             user = User(name=name,username=username, email=email, password=password, role_id=role_id, image=image_filename)
             db.session.add(user)
             db.session.commit()
-            flash('User created successfully!', 'message')
+            # flash('User created successfully!', 'message')
+            setAlert('success', 'Success', 'Add Success')
             return redirect(url_for('users.index'))
         else:
             data = {
@@ -218,7 +220,8 @@ def update(id):
         password = request.form['password']
         user.password = pbkdf2_sha256.hash(password)
         db.session.commit()
-        flash('User updated successfully!', 'message')
+        # flash('User updated successfully!', 'message')
+        setAlert('success', 'Success', 'Edit Success')
         return redirect(url_for('users.index'))
     else:
         result = User.query.get_or_404(id)
@@ -238,7 +241,8 @@ def delete(id):
         os.unlink(path_upload + '/' + user.image)
     db.session.delete(user)
     db.session.commit()
-    flash('User deleted successfully!', 'message')
+    # flash('User deleted successfully!', 'message')
+    setAlert('success', 'Success', 'Delete Success')
     return redirect(url_for('users.index'))
 
 def change_password():
@@ -257,7 +261,8 @@ def update_password():
         password  = request.form['password']
         user.password = pbkdf2_sha256.hash(password)
         db.session.commit()
-        flash('User change password successfully!', 'message')
+        # flash('User change password successfully!', 'message')
+        setAlert('success', 'Success', 'Password Changed Successfully');
         return redirect(url_for('users.index'))
     else :
         data = {

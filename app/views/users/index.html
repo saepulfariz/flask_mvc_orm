@@ -32,7 +32,8 @@
                             <form action="{{ url_for('users.delete', id=d.id) }}" method="post" style="display:inline;">
                                 <input type="hidden" name="_method" value="DELETE" />
                                 {{ form.csrf_token }}
-                                <button class="btn btn-sm btn-danger" type="submit">Delete</button>
+                                <button type='button' onclick='deleteTombol(this)'
+                                    class="btn btn-sm btn-danger">Delete</button>
                             </form>
                         </td>
                     </tr>
