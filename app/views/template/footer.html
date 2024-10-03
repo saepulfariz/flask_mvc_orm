@@ -10,6 +10,8 @@
 
 <script src="{{ url_for('static', filename = 'assets/sweetalert2/sweetalert2.all.min.js') }}"></script>
 
+{{ initAlert()|safe }}
+
 {% block script %} {% endblock %}
 
 </body>
