@@ -2,6 +2,7 @@ from flask import request, redirect, url_for, render_template, flash
 from app.models import Product, User
 from app import db
 from sqlalchemy import text 
+from app.helpers.custom_helper import setAlert
 
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, ValidationError, IntegerField, FloatField, DecimalField, SelectField
@@ -76,7 +77,8 @@ def create():
             product = Product(name=name, price=price, stock=stock,user_id=user_id )
             db.session.add(product)
             db.session.commit()
-            flash('Product created successfully!', 'message')
+            # flash('Product created successfully!', 'message')
+            setAlert('success', 'Success', 'Add Success')
             return redirect(url_for('products.index'))
         else:
             data = {
@@ -107,7 +109,8 @@ def update(id):
         product.stock = request.form['stock']
         product.user_id = request.form['user_id']
         db.session.commit()
-        flash('Product updated successfully!', 'message')
+        # flash('Product updated successfully!', 'message')
+        setAlert('success', 'Success', 'Edit Success')
         return redirect(url_for('products.index'))
     else:
         result = Product.query.get_or_404(id)
@@ -121,5 +124,6 @@ def delete(id):
     product = Product.query.get_or_404(id)
     db.session.delete(product)
     db.session.commit()
-    flash('Product deleted successfully!', 'message')
+    # flash('Product deleted successfully!', 'message')
+    setAlert('success', 'Success', 'Delete Success')
     return redirect(url_for('products.index'))
