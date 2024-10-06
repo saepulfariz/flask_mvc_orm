@@ -270,3 +270,10 @@ def update_password():
         }
 
         return render_template('users/change_password.html', data=data, form=form)
+    
+def profile():
+    data = {
+        'title' : 'My Profile',
+    }
+
+    return render_template('users/profile.html', data=data)

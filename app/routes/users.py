@@ -41,3 +41,7 @@ def change_password():
 @login_required
 def update_password():
     return user_controller.update_password()
+
+@users.route('/profile', methods=['GET'])
+def profile():
+    return user_controller.profile()
