@@ -280,3 +280,13 @@ def profile():
     }
 
     return render_template('users/profile.html', data=data)
+
+def edit_profile():
+    id  = session['id']
+    user = User.query.get_or_404(id)
+    data = {
+        'title' : 'Edit Profile',
+        'data' : user
+    }
+
+    return render_template('users/profile_edit.html', data=data)

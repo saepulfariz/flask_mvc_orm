@@ -45,3 +45,7 @@ def update_password():
 @users.route('/profile', methods=['GET'])
 def profile():
     return user_controller.profile()
+
+@users.route('/profile/edit', methods=['GET'])
+def edit_profile():
+    return user_controller.edit_profile()
