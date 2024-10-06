@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-7">
             <h1>Edit Profile</h1>
-            <form action="{{ url_for('users.update', id=data.data.id) }}" method="post" enctype="multipart/form-data">
+            <form action="{{ url_for('users.update_profile') }}" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="_method" value="PUT" />
                 {{ form.csrf_token }}
                 {{ form.name.label }} {{ form.name(size=20, value=data.data.name) }}

@@ -327,3 +327,38 @@ def edit_profile():
     }
 
     return render_template('users/profile_edit.html', data=data, form=form)
+
+def update_profile():
+    id  = session['id']
+    user = User.query.get_or_404(id)
+    form = ChangeProfileForm(original_email=user.email, is_edit=True)
+
+    if form.validate_on_submit():
+        # Mengambil file gambar dari form, jika ada
+        image_file = request.files['image'] if 'image' in request.files else None
+
+        if image_file:
+            # Amankan nama file dan simpan di direktori tertentu
+            image_filename = secure_filename(image_file.filename)
+            image_file.save(os.path.join(path_upload, image_filename))
+
+            if user.image != 'user.png' : 
+                os.unlink(path_upload + '/' + user.image)
+        else:
+            # Jika tidak ada gambar yang diunggah, gunakan default 'user.png'
+            image_filename = 'user.png'
+
+        user.image = image_filename
+        user.name = request.form['name']
+        user.email = request.form['email']
+        db.session.commit()
+        # flash('User updated successfully!', 'message')
+        setAlert('success', 'Success', 'Edit Success')
+        return redirect(url_for('users.profile'))
+    else:
+        data = {
+            'title' : 'Edit Profile',
+            'data' : user
+        }
+
+        return render_template('users/profile_edit.html', data=data, form=form)

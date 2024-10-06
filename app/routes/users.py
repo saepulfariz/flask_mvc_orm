@@ -49,3 +49,7 @@ def profile():
 @users.route('/profile/edit', methods=['GET'])
 def edit_profile():
     return user_controller.edit_profile()
+
+@users.route('/profile', methods=['PUT'])
+def update_profile():
+    return user_controller.update_profile()
