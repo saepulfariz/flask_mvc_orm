@@ -5,7 +5,41 @@
     <div class="row">
         <div class="col-md-7">
             <h1>Edit Profile</h1>
-            <a class="btn btn-secondary" href="{{ url_for('users.profile') }}">Back</a>
+            <form action="{{ url_for('users.update', id=data.data.id) }}" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="_method" value="PUT" />
+                {{ form.csrf_token }}
+                {{ form.name.label }} {{ form.name(size=20, value=data.data.name) }}
+                {% if form.name.errors %}
+                <span style="color: red;">{{ form.name.errors[0] }}</span>
+                {% endif %}
+                <br>
+
+                {{ form.username.label }}
+                {{ form.username(size=20, value=data.data.username, readonly=true, disabled=true) }}
+                {% if form.username.errors %}
+                <span style="color: red;">{{ form.username.errors[0] }}</span>
+                {% endif %}
+                <br>
+                {{ form.email.label }} {{ form.email(size=20, value=data.data.email) }}
+                {% if form.email.errors %}
+                <span style="color: red;">{{ form.email.errors[0] }}</span>
+                {% endif %}
+                <br>
+
+
+                <img src="{{ url_for('static', filename = 'uploads/users/'+ data.data.image) }}" alt="">
+                <br>
+                {{ form.image.label }}<br>
+                {{ form.image() }}<br>
+                {% for error in form.image.errors %}
+                <span style="color: red;">{{ error }}</span>
+                {% endfor %}
+                <br>
+
+
+                {{ form.submit() }}
+                <a class="btn btn-secondary" href="{{ url_for('users.profile') }}">Back</a>
+            </form>
         </div>
     </div>
 </div>

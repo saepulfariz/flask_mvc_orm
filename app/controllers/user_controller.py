@@ -115,6 +115,42 @@ class ChangePasswordFrom(FlaskForm):
         else: 
             raise ValidationError('User not found')
         
+class ChangeProfileForm(FlaskForm):
+    name = StringField('Name', 
+                        validators=[DataRequired()], 
+                        render_kw={"class": "form-control", "placeholder": "Enter your name"})
+    username = StringField('Username', 
+                           render_kw={"class": "form-control", "placeholder": "Enter your username"})
+    email = StringField('Email', 
+                        validators=[DataRequired(), Email()], 
+                        render_kw={"class": "form-control", "placeholder": "Enter your email"})
+    
+    image = FileField('Profile Image', validators=[
+        FileAllowed(['jpg', 'png', 'jpeg'], 'Images only!'),  # Validasi hanya gambar
+        file_size_limit(1 * 1024 * 1024)  # Batas ukuran file 1MB
+    ])
+    
+    submit = SubmitField('Submit', render_kw={"class": "btn btn-primary"})
+
+    # validators=[DataRequired(), Length(min=3, max=50,message="Password harus antara 3 sampai 50 karakter.")]
+
+    def __init__(self,  original_email=None, *args, **kwargs):
+        super(ChangeProfileForm, self).__init__(*args, **kwargs)
+        self.original_email = original_email
+
+        # Ambil argumen 'is_edit' dari kwargs, default False (create mode)
+        self.is_edit = kwargs.pop('is_edit', False)
+        
+
+    # Custom validator untuk memastikan email unik
+    def validate_email(self, email):
+        # Jika mode edit dan email tidak berubah, tidak perlu validasi unik
+        if self.original_email and self.original_email == email.data:
+            return
+        user = User.query.filter_by(email=email.data).first()
+        if user:
+            raise ValidationError('Email sudah digunakan. Silakan pilih email lain.')
+        
 path_upload = "static/uploads/users"
 
 def index():
@@ -283,10 +319,11 @@ def profile():
 
 def edit_profile():
     id  = session['id']
-    user = User.query.get_or_404(id)
+    result = User.query.get_or_404(id)
+    form = ChangeProfileForm(original_email=result.email, is_edit=True)
     data = {
         'title' : 'Edit Profile',
-        'data' : user
+        'data' : result
     }
 
-    return render_template('users/profile_edit.html', data=data)
+    return render_template('users/profile_edit.html', data=data, form=form)
