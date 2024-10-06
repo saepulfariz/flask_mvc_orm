@@ -5,6 +5,18 @@
     <div class="row">
         <div class="col-md-7">
             <h1>My Profile</h1>
+            <div class="row mt-2">
+                <div class="col-md-4 mb-2">
+                    <img class="img-thumbnail w-100"
+                        src="{{ url_for('static', filename = 'uploads/users/'+ data.data.image) }}" alt="">
+                </div>
+                <div class="col-md-6">
+                    <h4>Username : {{ data.data.username }}</h4>
+                    <h4>Name : {{ data.data.name }}</h4>
+                    <h4>email : {{ data.data.email }}</h4>
+                    <h4>role : {{ data.data.roles.title }}</h4>
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -272,8 +272,11 @@ def update_password():
         return render_template('users/change_password.html', data=data, form=form)
     
 def profile():
+    id  = session['id']
+    user = User.query.get_or_404(id)
     data = {
         'title' : 'My Profile',
+        'data' : user
     }
 
     return render_template('users/profile.html', data=data)
