@@ -12,6 +12,16 @@ def run():
     user = User(name=name,username=username, email=email, password=password, role_id=role_id)
     
     db.session.add(user)
+
+    name = 'member'
+    username = 'member'
+    email = 'member@gmail.com'
+    role_id = 2
+    password = '123'
+    password = pbkdf2_sha256.hash(password)
+    user = User(name=name,username=username, email=email, password=password, role_id=role_id)
+    
+    db.session.add(user)
     db.session.commit()
 
     print("Users seeder executed successfully!")
